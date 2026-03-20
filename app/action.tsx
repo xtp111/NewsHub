@@ -3,9 +3,8 @@
 export async function fetchData(query: string) {
     const apiKey = process.env.API_KEY;
 
-    // 这里的 fetch 是在服务器上执行的
     const response = await fetch(
-        `https://api.harvardartmuseums.org/RESOURCE_TYPE?apikey=${apiKey}`
+        `https://api.harvardartmuseums.org/object?q=${encodeURIComponent(query)}&apikey=${apiKey}`
     );
 
     if (!response.ok) {
