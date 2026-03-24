@@ -181,12 +181,12 @@ function ResultsList({ records }: { records: unknown[] }) {
             {art.primaryimageurl ? (
               <Thumbnail src={art.primaryimageurl} alt={art.title || ''} />
             ) : (
-              <NoImage>无图片</NoImage>
+              <NoImage>No Image</NoImage>
             )}
             <Content>
-              <ItemTitle>{art.title || '未命名作品'}</ItemTitle>
+              <ItemTitle>{art.title || 'Untitled'}</ItemTitle>
               <ItemMeta>
-                {art.artistname || '未知艺术家'}
+                {art.artistname || 'Unknown Artist'}
                 {art.dated && ` · ${art.dated}`}
               </ItemMeta>
               {(art.medium || art.classification) && (
