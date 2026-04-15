@@ -1,9 +1,25 @@
+/**
+ * Server Actions - Authentication
+ *
+ * Collection of server-side actions for Supabase authentication.
+ * These are called from client components using React 19's useActionState.
+ *
+ * Actions:
+ * - login: Email/password sign in
+ * - signup: New account registration with email confirmation
+ * - forgotPassword: Send password reset email
+ * - resetPassword: Update password using reset token
+ * - logout: Sign out and redirect to login
+ * - signInWithGoogle: Initiate Google OAuth flow
+ */
+
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 
+// Sign in with email and password; redirects to home on success
 export async function login(
   prevState: { error: string } | null,
   formData: FormData
@@ -25,6 +41,7 @@ export async function login(
   redirect("/");
 }
 
+// Register a new account; returns success message for email confirmation
 export async function signup(
   prevState: { error: string; success?: string } | null,
   formData: FormData
@@ -35,6 +52,7 @@ export async function signup(
   const password = formData.get("password") as string;
   const confirmPassword = formData.get("confirmPassword") as string;
 
+  // Validate password confirmation match
   if (password !== confirmPassword) {
     return { error: "Passwords do not match." };
   }
@@ -60,6 +78,7 @@ export async function signup(
   };
 }
 
+// Send a password reset email with a redirect to /reset-password
 export async function forgotPassword(
   prevState: { error: string; success?: string } | null,
   formData: FormData
@@ -83,6 +102,7 @@ export async function forgotPassword(
   };
 }
 
+// Update the user's password (called after clicking the reset link)
 export async function resetPassword(
   prevState: { error: string } | null,
   formData: FormData
@@ -92,6 +112,7 @@ export async function resetPassword(
   const password = formData.get("password") as string;
   const confirmPassword = formData.get("confirmPassword") as string;
 
+  // Validate password confirmation match
   if (password !== confirmPassword) {
     return { error: "Passwords do not match." };
   }
@@ -107,12 +128,14 @@ export async function resetPassword(
   redirect("/login");
 }
 
+// Sign out the current user and redirect to the login page
 export async function logout() {
   const supabase = await createClient();
   await supabase.auth.signOut();
   redirect("/login");
 }
 
+// Initiate Google OAuth sign-in; redirects to Google's consent screen
 export async function signInWithGoogle() {
   const supabase = await createClient();
   const origin = (await headers()).get("origin");
@@ -128,6 +151,7 @@ export async function signInWithGoogle() {
     return { error: error.message };
   }
 
+  // Redirect to Google's OAuth consent screen
   if (data.url) {
     redirect(data.url);
   }

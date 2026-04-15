@@ -1,22 +1,41 @@
+/**
+ * Middleware (Proxy)
+ *
+ * Next.js middleware that runs on every request (except static assets).
+ * Handles Supabase session management and auth-based route protection.
+ *
+ * Current behavior:
+ * - Refreshes the Supabase auth session on every request via cookie handling
+ * - Redirects authenticated users away from auth pages (login, signup, forgot-password)
+ * - Future: Can be extended to protect specific routes for unauthenticated users
+ *
+ * The matcher config excludes static files and images from middleware processing.
+ */
+
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
+// Auth-related pages that authenticated users should not access
 const authPages = ["/login", "/signup", "/forgot-password"];
 
 export async function proxy(request: NextRequest) {
+  // Create the default "pass-through" response
   let supabaseResponse = NextResponse.next({
     request,
   });
 
+  // Initialize a Supabase server client with cookie-based session management
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
+        // Read cookies from the incoming request
         getAll() {
           return request.cookies.getAll();
         },
+        // Write updated session cookies to both the request and response
         setAll(cookiesToSet) {
           cookiesToSet.forEach(({ name, value }) =>
             request.cookies.set(name, value)
@@ -32,6 +51,7 @@ export async function proxy(request: NextRequest) {
     }
   );
 
+  // Fetch the current user's session (also refreshes the session token)
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -39,7 +59,7 @@ export async function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname;
   const isAuthPage = authPages.some((p) => path === p);
 
-  // Redirect authenticated users away from auth pages
+  // Redirect authenticated users away from auth pages (they're already logged in)
   if (user && isAuthPage) {
     const url = request.nextUrl.clone();
     url.pathname = "/";
@@ -59,6 +79,7 @@ export async function proxy(request: NextRequest) {
   return supabaseResponse;
 }
 
+// Matcher config: run middleware on all routes except static assets and images
 export const config = {
   matcher: [
     "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",

@@ -1,3 +1,17 @@
+/**
+ * BookmarkContext - Global Bookmark State Management
+ *
+ * Provides a React Context for managing bookmarks across the entire application.
+ * Features:
+ * - Fetches all bookmarks from the API on initial mount
+ * - addBookmark: Saves an article as a bookmark via POST /api/bookmarks
+ * - removeBookmark: Deletes a bookmark via DELETE /api/bookmarks/[id]
+ * - isBookmarked: Checks if a specific article is already bookmarked
+ *
+ * The BookmarkProvider wraps the app in the StyledComponentsRegistry,
+ * making bookmark state available to all client components.
+ */
+
 "use client";
 
 import {
@@ -9,6 +23,7 @@ import {
 } from "react";
 import type { Article, BookmarkData } from "@/types";
 
+// Shape of the bookmark context value
 interface BookmarkContextType {
   bookmarks: BookmarkData[];
   loading: boolean;
@@ -17,18 +32,24 @@ interface BookmarkContextType {
   isBookmarked: (articleId: string) => boolean;
 }
 
+// Create context with undefined default (enforced by useBookmarks hook)
 const BookmarkContext = createContext<BookmarkContextType | undefined>(
   undefined
 );
 
+/**
+ * BookmarkProvider - Wraps children with bookmark state and CRUD operations.
+ */
 export function BookmarkProvider({ children }: { children: ReactNode }) {
   const [bookmarks, setBookmarks] = useState<BookmarkData[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Fetch all bookmarks from the API when the provider mounts
   useEffect(() => {
     fetchBookmarks();
   }, []);
 
+  // Load all bookmarks from the server
   const fetchBookmarks = async () => {
     try {
       const res = await fetch("/api/bookmarks");
@@ -41,6 +62,7 @@ export function BookmarkProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  // Save a new bookmark by posting article data to the API
   const addBookmark = async (article: Article): Promise<boolean> => {
     try {
       const res = await fetch("/api/bookmarks", {
@@ -54,11 +76,13 @@ export function BookmarkProvider({ children }: { children: ReactNode }) {
           category: article.category,
           author: article.author,
           publishedAt: article.publishedAt,
+          sourceUrl: article.sourceUrl,
         }),
       });
 
       if (res.ok) {
         const data = await res.json();
+        // Prepend new bookmark to the list (newest first)
         setBookmarks((prev) => [data.bookmark, ...prev]);
         return true;
       }
@@ -69,6 +93,7 @@ export function BookmarkProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  // Delete a bookmark by its MongoDB _id
   const removeBookmark = async (bookmarkId: string): Promise<boolean> => {
     try {
       const res = await fetch(`/api/bookmarks/${bookmarkId}`, {
@@ -76,6 +101,7 @@ export function BookmarkProvider({ children }: { children: ReactNode }) {
       });
 
       if (res.ok) {
+        // Remove the deleted bookmark from local state
         setBookmarks((prev) => prev.filter((b) => b._id !== bookmarkId));
         return true;
       }
@@ -86,6 +112,7 @@ export function BookmarkProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  // Check if an article is already bookmarked by its article ID
   const isBookmarked = (articleId: string): boolean => {
     return bookmarks.some((b) => b.articleId === articleId);
   };
@@ -105,6 +132,10 @@ export function BookmarkProvider({ children }: { children: ReactNode }) {
   );
 }
 
+/**
+ * useBookmarks - Custom hook to access the BookmarkContext.
+ * Throws an error if used outside of a BookmarkProvider.
+ */
 export function useBookmarks(): BookmarkContextType {
   const context = useContext(BookmarkContext);
   if (!context) {

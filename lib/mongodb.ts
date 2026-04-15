@@ -1,32 +1,54 @@
+/**
+ * MongoDB Connection Utility
+ *
+ * Manages a singleton MongoDB connection using Mongoose.
+ * Caches the connection on the Node.js global object to prevent
+ * creating multiple connections during hot-reloads in development.
+ *
+ * Usage: `await connectDB()` before any Mongoose model operations.
+ */
+
 import mongoose from "mongoose";
 
+// MongoDB connection string from environment variables
 const MONGODB_URI = process.env.MONGODB_URI;
 
 if (!MONGODB_URI) {
   throw new Error("Please define the MONGODB_URI environment variable in .env.local");
 }
 
+// Type definition for the cached connection stored on the global object
 interface MongooseCache {
   conn: typeof mongoose | null;
   promise: Promise<typeof mongoose> | null;
 }
 
+// Extend the global namespace to store the Mongoose connection cache
 declare global {
   // eslint-disable-next-line no-var
   var mongoose: MongooseCache | undefined;
 }
 
+// Initialize cache from global or create a new empty cache
 const cached: MongooseCache = global.mongoose ?? { conn: null, promise: null };
 
+// Store the cache reference on the global object for reuse across hot-reloads
 if (!global.mongoose) {
   global.mongoose = cached;
 }
 
+/**
+ * Establishes or reuses a MongoDB connection.
+ * Returns the existing connection if available, otherwise creates a new one.
+ * On connection failure, clears the cached promise so retries are possible.
+ */
 async function connectDB(): Promise<typeof mongoose> {
+  // Return existing connection if already established
   if (cached.conn) {
     return cached.conn;
   }
 
+  // Create a new connection promise if none exists
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
@@ -38,9 +60,11 @@ async function connectDB(): Promise<typeof mongoose> {
     });
   }
 
+  // Await the connection promise and cache the result
   try {
     cached.conn = await cached.promise;
   } catch (e) {
+    // Clear the promise on failure to allow retry
     cached.promise = null;
     throw e;
   }

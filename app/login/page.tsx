@@ -1,3 +1,12 @@
+/**
+ * Login Page - /login
+ *
+ * Email/password login form with Google OAuth option.
+ * Uses React 19's useActionState for form handling with server actions.
+ * Displays error messages from failed login attempts or auth callback errors.
+ * Includes links to sign-up and forgot-password pages.
+ */
+
 "use client";
 
 import { useActionState } from "react";
@@ -6,6 +15,9 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import styled from "styled-components";
 
+/* --- Styled Components for Auth Forms --- */
+
+// Centered page container
 const Main = styled.main`
   max-width: 42rem;
   margin: 0 auto;
@@ -156,16 +168,21 @@ const StyledLink = styled(Link)`
   }
 `;
 
+/* --- Component --- */
+
 export default function LoginPage() {
   const searchParams = useSearchParams();
+  // Check for auth callback errors (e.g., from OAuth redirect failure)
   const callbackError = searchParams.get("error");
 
+  // useActionState hooks for handling form submissions with server actions
   const [loginState, loginAction, loginPending] = useActionState(login, null);
   const [, googleAction, googlePending] = useActionState(
     signInWithGoogle,
     null
   );
 
+  // Combine possible error sources: form submission error or OAuth callback error
   const errorMessage =
     loginState?.error ||
     (callbackError === "auth_callback_error"

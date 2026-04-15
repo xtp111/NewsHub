@@ -1,3 +1,16 @@
+/**
+ * Auth Callback Route - /auth/callback
+ *
+ * Handles the OAuth/email callback from Supabase authentication.
+ * After a user signs in (via Google OAuth or email confirmation link),
+ * Supabase redirects here with a "code" query parameter.
+ *
+ * This route:
+ * 1. Exchanges the authorization code for a session
+ * 2. Redirects to the "next" URL (default: home page) on success
+ * 3. Redirects to /login with an error parameter on failure
+ */
+
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { createClient } from "@/lib/supabase/server";
@@ -8,10 +21,12 @@ export async function GET(request: NextRequest) {
   const next = searchParams.get("next") ?? "/";
 
   if (code) {
+    // Exchange the authorization code for a Supabase session
     const supabase = await createClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
 
     if (!error) {
+      // Success: redirect to the intended destination page
       const redirectUrl = request.nextUrl.clone();
       redirectUrl.pathname = next;
       redirectUrl.searchParams.delete("code");
@@ -20,7 +35,7 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  // If no code or exchange failed, redirect to login with error
+  // Failure: redirect to login with an error indicator
   const loginUrl = request.nextUrl.clone();
   loginUrl.pathname = "/login";
   loginUrl.searchParams.set("error", "auth_callback_error");

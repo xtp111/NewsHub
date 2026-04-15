@@ -1,15 +1,28 @@
+/**
+ * SearchBar Component
+ *
+ * A simple search form with a text input and submit button.
+ * On form submission, navigates to /search?q=<query> using Next.js router.
+ * Accepts an optional initialValue prop to pre-fill the input
+ * (used on the search results page to show the current query).
+ */
+
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
 
+/* --- Styled Components --- */
+
+// Horizontal flex container for the search input and button
 const SearchContainer = styled.div`
   display: flex;
   gap: 12px;
   max-width: 600px;
 `;
 
+// Search text input with focus border highlight
 const Input = styled.input`
   flex: 1;
   padding: 12px 16px;
@@ -27,6 +40,7 @@ const Input = styled.input`
   }
 `;
 
+// Submit button styled with primary blue color
 const Button = styled.button`
   padding: 12px 24px;
   background: #0066cc;
@@ -42,6 +56,8 @@ const Button = styled.button`
   }
 `;
 
+/* --- Component --- */
+
 export default function SearchBar({
   initialValue = "",
 }: {
@@ -50,6 +66,7 @@ export default function SearchBar({
   const [query, setQuery] = useState(initialValue);
   const router = useRouter();
 
+  // Handle form submission: navigate to search page with the query parameter
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (query.trim()) {

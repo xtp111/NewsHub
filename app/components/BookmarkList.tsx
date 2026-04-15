@@ -1,16 +1,34 @@
+/**
+ * BookmarkList Component
+ *
+ * Displays a responsive grid of bookmarked articles.
+ * Each bookmark card shows a thumbnail image, category, title, author, and date.
+ * - Delete button (X) on each card to remove the bookmark via BookmarkContext
+ * - Clicking the card navigates to the article detail page
+ * - Shows an empty state message when no bookmarks exist
+ *
+ * BookmarkImage is a separate sub-component to avoid React hook rules
+ * violations when using useState inside a .map() callback.
+ */
+
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { useBookmarks } from "@/context/BookmarkContext";
 import styled from "styled-components";
 import type { BookmarkData } from "@/types";
 
+/* --- Styled Components --- */
+
+// Responsive grid container for bookmark cards
 const Container = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 24px;
 `;
 
+// Individual bookmark card with relative positioning for the delete button
 const Card = styled.div`
   background: #fff;
   border-radius: 8px;
@@ -19,6 +37,7 @@ const Card = styled.div`
   position: relative;
 `;
 
+// Thumbnail image container
 const ImageWrapper = styled.div`
   width: 100%;
   height: 160px;
@@ -27,17 +46,28 @@ const ImageWrapper = styled.div`
   align-items: center;
   justify-content: center;
   color: #999;
+  overflow: hidden;
 `;
 
+// Bookmark thumbnail image
+const ThumbnailImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
+// Card content area below the image
 const Content = styled.div`
   padding: 16px;
 `;
 
+// Category label
 const Category = styled.span`
   font-size: 12px;
   color: #0066cc;
 `;
 
+// Bookmark title
 const Title = styled.h3`
   font-size: 16px;
   font-weight: 600;
@@ -46,11 +76,13 @@ const Title = styled.h3`
   line-height: 1.4;
 `;
 
+// Author and date metadata
 const Meta = styled.div`
   font-size: 12px;
   color: #999;
 `;
 
+// Circular delete button positioned at top-right corner of the card
 const DeleteButton = styled.button`
   position: absolute;
   top: 8px;
@@ -72,6 +104,7 @@ const DeleteButton = styled.button`
   }
 `;
 
+// Empty state shown when the user has no bookmarks
 const EmptyState = styled.div`
   text-align: center;
   padding: 64px;
@@ -79,10 +112,28 @@ const EmptyState = styled.div`
   grid-column: 1 / -1;
 `;
 
+// Makes the entire card clickable as a link
 const StyledLink = styled(Link)`
   text-decoration: none;
   display: block;
 `;
+
+/* --- Sub-Component --- */
+
+/**
+ * BookmarkImage - Handles individual image error state.
+ * Extracted as a separate component so each bookmark card can independently
+ * track its own image load error via useState (required by React's Rules of Hooks).
+ */
+function BookmarkImage({ src, alt }: { src: string; alt: string }) {
+  const [error, setError] = useState(false);
+  if (!src || error) return <>No Image</>;
+  return (
+    <ThumbnailImage src={src} alt={alt} onError={() => setError(true)} />
+  );
+}
+
+/* --- Component --- */
 
 export default function BookmarkList({
   bookmarks,
@@ -91,6 +142,7 @@ export default function BookmarkList({
 }) {
   const { removeBookmark } = useBookmarks();
 
+  // Show empty state if user has no bookmarks
   if (bookmarks.length === 0) {
     return <EmptyState>No bookmarked articles yet</EmptyState>;
   }
@@ -99,15 +151,17 @@ export default function BookmarkList({
     <Container>
       {bookmarks.map((bookmark) => (
         <Card key={bookmark._id}>
+          {/* Delete button to remove this bookmark */}
           <DeleteButton
             onClick={() => removeBookmark(bookmark._id)}
             title="Remove bookmark"
           >
             &times;
           </DeleteButton>
+          {/* Card content links to the article detail page */}
           <StyledLink href={`/article/${bookmark.articleId}`}>
             <ImageWrapper>
-              {bookmark.imageUrl ? "Image" : "No Image"}
+              <BookmarkImage src={bookmark.imageUrl} alt={bookmark.title} />
             </ImageWrapper>
             <Content>
               <Category>{bookmark.category}</Category>

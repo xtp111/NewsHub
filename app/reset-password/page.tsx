@@ -1,8 +1,20 @@
+/**
+ * Reset Password Page - /reset-password
+ *
+ * Form for setting a new password after clicking the reset link from email.
+ * The user arrives here via the auth callback with an active session.
+ * Uses Supabase's updateUser method through a server action.
+ * Validates password confirmation match on the server side.
+ * Redirects to /login on successful password update.
+ */
+
 "use client";
 
 import { useActionState } from "react";
 import { resetPassword } from "@/app/actions/auth";
 import styled from "styled-components";
+
+/* --- Styled Components for Auth Forms --- */
 
 const Main = styled.main`
   max-width: 42rem;
@@ -92,7 +104,10 @@ const ErrorText = styled.p`
   margin: 0;
 `;
 
+/* --- Component --- */
+
 export default function ResetPasswordPage() {
+  // useActionState manages form state and pending status for the server action
   const [state, formAction, pending] = useActionState(resetPassword, null);
 
   return (

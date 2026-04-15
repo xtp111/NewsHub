@@ -1,9 +1,20 @@
+/**
+ * Forgot Password Page - /forgot-password
+ *
+ * Allows users to request a password reset link via email.
+ * Uses Supabase's resetPasswordForEmail method through a server action.
+ * Shows success or error messages after form submission.
+ * Includes a back link to the login page.
+ */
+
 "use client";
 
 import { useActionState } from "react";
 import { forgotPassword } from "@/app/actions/auth";
 import Link from "next/link";
 import styled from "styled-components";
+
+/* --- Styled Components for Auth Forms --- */
 
 const Main = styled.main`
   max-width: 42rem;
@@ -119,7 +130,10 @@ const FooterLink = styled(Link)`
   }
 `;
 
+/* --- Component --- */
+
 export default function ForgotPasswordPage() {
+  // useActionState manages form state and pending status for the server action
   const [state, formAction, pending] = useActionState(forgotPassword, null);
 
   return (

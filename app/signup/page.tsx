@@ -1,9 +1,21 @@
+/**
+ * Sign Up Page - /signup
+ *
+ * Registration form with email/password and Google OAuth options.
+ * Uses React 19's useActionState for server action form handling.
+ * Validates password match on the server side.
+ * Shows success message (email confirmation) or error messages.
+ * Includes a link to the login page for existing users.
+ */
+
 "use client";
 
 import { useActionState } from "react";
 import { signup, signInWithGoogle } from "@/app/actions/auth";
 import Link from "next/link";
 import styled from "styled-components";
+
+/* --- Styled Components for Auth Forms --- */
 
 const Main = styled.main`
   max-width: 42rem;
@@ -159,7 +171,10 @@ const StyledLink = styled(Link)`
   }
 `;
 
+/* --- Component --- */
+
 export default function SignupPage() {
+  // useActionState hooks for handling form submissions with server actions
   const [signupState, signupAction, signupPending] = useActionState(
     signup,
     null

@@ -1,8 +1,17 @@
+/**
+ * Bookmarks Page - /bookmarks
+ *
+ * Displays the user's saved bookmarks using the BookmarkContext.
+ * Shows a title with the total bookmark count and the BookmarkList grid.
+ */
+
 "use client";
 
 import { useBookmarks } from "@/context/BookmarkContext";
 import BookmarkList from "@/app/components/BookmarkList";
 import styled from "styled-components";
+
+/* --- Styled Components --- */
 
 const Container = styled.div`
   max-width: 1200px;
@@ -17,11 +26,14 @@ const Title = styled.h1`
   margin-bottom: 24px;
 `;
 
+// Bookmark count displayed next to the title
 const Count = styled.span`
   color: #666;
   font-size: 16px;
   font-weight: 400;
 `;
+
+/* --- Component --- */
 
 export default function BookmarksPage() {
   const { bookmarks } = useBookmarks();

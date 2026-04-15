@@ -1,9 +1,24 @@
+/**
+ * NewsCard Component
+ *
+ * Displays a single news article as a card in the news grid.
+ * Features:
+ * - Thumbnail image with graceful fallback ("No Image") on load error
+ * - Article category label, title (clamped to 2 lines), and summary
+ * - Author name and formatted publish date in the footer
+ * - Entire card is clickable, linking to the article detail page
+ */
+
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import styled from "styled-components";
 import type { Article } from "@/types";
 
+/* --- Styled Components --- */
+
+// Card container with subtle shadow and hover elevation effect
 const Card = styled.div`
   background: #fff;
   border-radius: 8px;
@@ -16,6 +31,7 @@ const Card = styled.div`
   }
 `;
 
+// Image container with fixed height and grey fallback background
 const ImageWrapper = styled.div`
   width: 100%;
   height: 180px;
@@ -25,18 +41,29 @@ const ImageWrapper = styled.div`
   justify-content: center;
   color: #999;
   font-size: 14px;
+  overflow: hidden;
 `;
 
+// Thumbnail image that fills its container with cover mode
+const ThumbnailImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
+// Content area below the image
 const Content = styled.div`
   padding: 16px;
 `;
 
+// Category label displayed above the title
 const Category = styled.span`
   font-size: 12px;
   color: #0066cc;
   font-weight: 500;
 `;
 
+// Article title, clamped to 2 lines with ellipsis overflow
 const Title = styled.h3`
   font-size: 16px;
   font-weight: 600;
@@ -49,6 +76,7 @@ const Title = styled.h3`
   overflow: hidden;
 `;
 
+// Article summary, clamped to 2 lines
 const Summary = styled.p`
   font-size: 14px;
   color: #666;
@@ -60,6 +88,7 @@ const Summary = styled.p`
   margin-bottom: 12px;
 `;
 
+// Footer row displaying author and date
 const Meta = styled.div`
   display: flex;
   justify-content: space-between;
@@ -68,17 +97,32 @@ const Meta = styled.div`
   color: #999;
 `;
 
+// Wrapper link that makes the entire card clickable
 const StyledLink = styled(Link)`
   text-decoration: none;
   display: block;
 `;
 
+/* --- Component --- */
+
 export default function NewsCard({ article }: { article: Article }) {
+  // Track image load errors to show fallback text
+  const [imgError, setImgError] = useState(false);
+
   return (
     <StyledLink href={`/article/${article.id}`}>
       <Card>
         <ImageWrapper>
-          {article.imageUrl ? "Image" : "No Image"}
+          {/* Show article image if available and not errored; otherwise show fallback */}
+          {article.imageUrl && !imgError ? (
+            <ThumbnailImage
+              src={article.imageUrl}
+              alt={article.title}
+              onError={() => setImgError(true)}
+            />
+          ) : (
+            "No Image"
+          )}
         </ImageWrapper>
         <Content>
           <Category>{article.category}</Category>
