@@ -10,13 +10,6 @@
 
 import mongoose from "mongoose";
 
-// MongoDB connection string from environment variables
-const MONGODB_URI = process.env.MONGODB_URI;
-
-if (!MONGODB_URI) {
-  throw new Error("Please define the MONGODB_URI environment variable in .env.local");
-}
-
 // Type definition for the cached connection stored on the global object
 interface MongooseCache {
   conn: typeof mongoose | null;
@@ -39,10 +32,16 @@ if (!global.mongoose) {
 
 /**
  * Establishes or reuses a MongoDB connection.
- * Returns the existing connection if available, otherwise creates a new one.
- * On connection failure, clears the cached promise so retries are possible.
+ * Validates MONGODB_URI at runtime (not module load) to avoid build-time errors
+ * on platforms like Vercel where env vars aren't available during `next build`.
  */
 async function connectDB(): Promise<typeof mongoose> {
+  const MONGODB_URI = process.env.MONGODB_URI;
+
+  if (!MONGODB_URI) {
+    throw new Error("Please define the MONGODB_URI environment variable");
+  }
+
   // Return existing connection if already established
   if (cached.conn) {
     return cached.conn;
@@ -54,7 +53,7 @@ async function connectDB(): Promise<typeof mongoose> {
       bufferCommands: false,
     };
 
-    cached.promise = mongoose.connect(MONGODB_URI!, opts).then((mongoose) => {
+    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
       console.log("MongoDB connected successfully");
       return mongoose;
     });
