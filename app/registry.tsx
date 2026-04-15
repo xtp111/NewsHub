@@ -3,14 +3,14 @@
 import React, { useState } from "react";
 import { useServerInsertedHTML } from "next/navigation";
 import { ServerStyleSheet, StyleSheetManager } from "styled-components";
+import { BookmarkProvider } from "@/context/BookmarkContext";
+import GlobalStyles from "@/styles/GlobalStyles";
 
 export default function StyledComponentsRegistry({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  // Only create stylesheet once with lazy initial state
-  // x-ref: https://reactjs.org/docs/hooks-reference.html#lazy-initial-state
   const [styledComponentsStyleSheet] = useState(() => new ServerStyleSheet());
 
   useServerInsertedHTML(() => {
@@ -19,11 +19,20 @@ export default function StyledComponentsRegistry({
     return <>{styles}</>;
   });
 
-  if (typeof window !== "undefined") return <>{children}</>;
+  if (typeof window !== "undefined")
+    return (
+      <BookmarkProvider>
+        <GlobalStyles />
+        {children}
+      </BookmarkProvider>
+    );
 
   return (
     <StyleSheetManager sheet={styledComponentsStyleSheet.instance}>
-      {children}
+      <BookmarkProvider>
+        <GlobalStyles />
+        {children}
+      </BookmarkProvider>
     </StyleSheetManager>
   );
 }
