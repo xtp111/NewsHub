@@ -25,8 +25,8 @@ export async function GET(
 
     // Count total likes for this article
     const count = await Like.countDocuments({ articleId: id });
-    // hasLiked is always false on GET since there's no user session tracking likes
-    const hasLiked = false;
+    // Check if a like record exists (simplified model without per-user tracking)
+    const hasLiked = count > 0;
 
     return NextResponse.json({ count, hasLiked });
   } catch (error) {
@@ -49,15 +49,11 @@ export async function POST(
     const { action } = body as { action: "like" | "unlike" };
 
     if (action === "like") {
-      // Prevent duplicate likes for the same article
+      // Create a like record if one doesn't already exist
       const existing = await Like.findOne({ articleId: id });
-      if (existing) {
-        return NextResponse.json(
-          { error: "Already liked" },
-          { status: 400 }
-        );
+      if (!existing) {
+        await Like.create({ articleId: id });
       }
-      await Like.create({ articleId: id });
     } else if (action === "unlike") {
       // Remove the like record for this article
       await Like.deleteOne({ articleId: id });

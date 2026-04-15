@@ -14,6 +14,7 @@
 
 import { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useBookmarks } from "@/context/BookmarkContext";
 import type { Article } from "@/types";
 
 /* --- Styled Components --- */
@@ -137,6 +138,8 @@ export default function ArticleDetail({ article }: { article: Article }) {
   const [hasLiked, setHasLiked] = useState(false);
   const [imgError, setImgError] = useState(false);
   const [shareText, setShareText] = useState("Share");
+  const { addBookmark, removeBookmark, isBookmarked, bookmarks } = useBookmarks();
+  const bookmarked = isBookmarked(article.id);
 
   // Fetch the current like count when the component mounts or article changes.
   // Uses .then() chain (not async/await) to satisfy ESLint's set-state-in-effect rule.
@@ -195,6 +198,18 @@ export default function ArticleDetail({ article }: { article: Article }) {
     }
   };
 
+  // Toggle bookmark: add if not bookmarked, remove if already bookmarked
+  const handleBookmark = async () => {
+    if (bookmarked) {
+      const existing = bookmarks.find((b) => b.articleId === article.id);
+      if (existing) {
+        await removeBookmark(existing._id);
+      }
+    } else {
+      await addBookmark(article);
+    }
+  };
+
   return (
     <Container>
       {/* Article header: category, title, and metadata */}
@@ -236,10 +251,13 @@ export default function ArticleDetail({ article }: { article: Article }) {
         )}
       </Content>
 
-      {/* Like and share action buttons */}
+      {/* Like, Bookmark, and Share action buttons */}
       <Actions>
         <ActionButton $active={hasLiked} onClick={handleLike}>
           {hasLiked ? "Liked" : "Like"} ({likes})
+        </ActionButton>
+        <ActionButton $active={bookmarked} onClick={handleBookmark}>
+          {bookmarked ? "Bookmarked" : "Bookmark"}
         </ActionButton>
         <ActionButton onClick={handleShare}>{shareText}</ActionButton>
       </Actions>
