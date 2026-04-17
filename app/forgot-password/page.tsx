@@ -7,7 +7,7 @@
  * Includes a back link to the login page.
  */
 
-"use client";
+'use client'; // to use useActionState react hook
 
 import { useActionState } from "react";
 import { forgotPassword } from "@/app/actions/auth";

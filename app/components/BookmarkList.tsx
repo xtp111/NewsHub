@@ -7,11 +7,9 @@
  * - Clicking the card navigates to the article detail page
  * - Shows an empty state message when no bookmarks exist
  *
- * BookmarkImage is a separate sub-component to avoid React hook rules
+ * BookmarkImage is a separate subcomponent to avoid React hook rules
  * violations when using useState inside a .map() callback.
  */
-
-"use client";
 
 import { useState } from "react";
 import Link from "next/link";

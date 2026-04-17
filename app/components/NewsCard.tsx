@@ -9,8 +9,6 @@
  * - Entire card is clickable, linking to the article detail page
  */
 
-"use client";
-
 import { useState } from "react";
 import Link from "next/link";
 import styled from "styled-components";

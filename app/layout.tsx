@@ -18,7 +18,7 @@ import { createClient } from "@/lib/supabase/server";
 
 // Application-wide metadata for SEO
 export const metadata: Metadata = {
-  title: "NewsHub",
+  title: "NewsHub | CS601GW",
   description: "Get the latest news updates",
 };
 

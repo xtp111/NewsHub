@@ -6,7 +6,6 @@
  * Accepts an optional initialValue prop to pre-fill the input
  * (used on the search results page to show the current query).
  */
-
 "use client";
 
 import { useState } from "react";

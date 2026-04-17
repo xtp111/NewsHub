@@ -10,8 +10,6 @@
  * - Share button using Web Share API with clipboard fallback
  */
 
-"use client";
-
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useBookmarks } from "@/context/BookmarkContext";
@@ -128,7 +126,7 @@ const ActionButton = styled.button<{ $active?: boolean }>`
  * and replacing it with an ellipsis.
  */
 function cleanContent(content: string): string {
-  return content.replace(/\[\+\d+ chars\]$/, "...");
+  return content.replace(/\[\+\d+ chars]$/, "...");
 }
 
 /* --- Component --- */
@@ -188,7 +186,7 @@ export default function ArticleDetail({ article }: { article: Article }) {
           url: shareUrl,
         });
       } catch {
-        // User cancelled the share dialog
+        // User canceled the share dialog
       }
     } else {
       // Fallback: copy the article URL to clipboard

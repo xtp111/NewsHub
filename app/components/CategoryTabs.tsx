@@ -7,8 +7,6 @@
  * The active category is highlighted with a filled blue style.
  */
 
-"use client";
-
 import styled from "styled-components";
 
 /* --- Styled Components --- */

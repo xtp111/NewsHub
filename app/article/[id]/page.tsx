@@ -22,7 +22,8 @@ import type { Article } from "@/types";
 const Container = styled.div`
   max-width: 800px;
   margin: 0 auto;
-  padding: 24px;
+  padding: 0 5%;
+  background-color: white;
 `;
 
 // Centered loading indicator

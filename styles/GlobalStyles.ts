@@ -5,12 +5,10 @@
  * Sets up:
  * - Universal box-sizing reset
  * - System font stack for body text
- * - Light grey page background
+ * - Light gray page background
  * - Base link and button styling
  * - Responsive image defaults
  */
-
-"use client";
 
 import { createGlobalStyle } from "styled-components";
 

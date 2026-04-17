@@ -9,7 +9,6 @@
  * Receives the current Supabase user as a prop from the server-rendered RootLayout.
  */
 
-"use client";
 
 import Link from "next/link";
 import styled from "styled-components";
