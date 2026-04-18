@@ -14,6 +14,6 @@ export default function AsyncBoundary({
   loadingFallback = <div style={{ textAlign: "center", padding: "2rem" }}>Loading...</div>,
 }: AsyncBoundaryProps) {
   if (loading) return <>{loadingFallback}</>;
-  if (error) return <div style={{ textAlign: "center", padding: "2rem", color: "#dc2626" }}>Error: {error}</div>;
+  if (error) return <div style={{ textAlign: "center", padding: "2rem", color: "var(--color-danger-alt)" }}>Error: {error}</div>;
   return <>{children}</>;
 }

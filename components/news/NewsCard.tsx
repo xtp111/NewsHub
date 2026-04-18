@@ -18,7 +18,7 @@ import type { Article } from "@/types";
 
 // Card container with subtle shadow and hover elevation effect
 const Card = styled.div`
-  background: #fff;
+  background: var(--color-bg);
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
@@ -33,11 +33,11 @@ const Card = styled.div`
 const ImageWrapper = styled.div`
   width: 100%;
   height: 180px;
-  background: #f0f0f0;
+  background: var(--color-bg-subtle);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #999;
+  color: var(--color-text-placeholder);
   font-size: 14px;
   overflow: hidden;
 `;
@@ -57,7 +57,7 @@ const Content = styled.div`
 // Category label displayed above the title
 const Category = styled.span`
   font-size: 12px;
-  color: #0066cc;
+  color: var(--color-primary);
   font-weight: 500;
 `;
 
@@ -65,7 +65,7 @@ const Category = styled.span`
 const Title = styled.h3`
   font-size: 16px;
   font-weight: 600;
-  color: #1a1a1a;
+  color: var(--color-text);
   margin: 8px 0;
   line-height: 1.4;
   display: -webkit-box;
@@ -77,7 +77,7 @@ const Title = styled.h3`
 // Article summary, clamped to 2 lines
 const Summary = styled.p`
   font-size: 14px;
-  color: #666;
+  color: var(--color-text-subtle);
   line-height: 1.5;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -92,7 +92,7 @@ const Meta = styled.div`
   justify-content: space-between;
   align-items: center;
   font-size: 12px;
-  color: #999;
+  color: var(--color-text-placeholder);
 `;
 
 // Wrapper link that makes the entire card clickable

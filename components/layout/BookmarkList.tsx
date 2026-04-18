@@ -28,7 +28,7 @@ const Container = styled.div`
 
 // Individual bookmark card with relative positioning for the delete button
 const Card = styled.div`
-  background: #fff;
+  background: var(--color-bg);
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
@@ -39,11 +39,11 @@ const Card = styled.div`
 const ImageWrapper = styled.div`
   width: 100%;
   height: 160px;
-  background: #f0f0f0;
+  background: var(--color-bg-subtle);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #999;
+  color: var(--color-text-placeholder);
   overflow: hidden;
 `;
 
@@ -62,14 +62,14 @@ const Content = styled.div`
 // Category label
 const Category = styled.span`
   font-size: 12px;
-  color: #0066cc;
+  color: var(--color-primary);
 `;
 
 // Bookmark title
 const Title = styled.h3`
   font-size: 16px;
   font-weight: 600;
-  color: #1a1a1a;
+  color: var(--color-text);
   margin: 8px 0;
   line-height: 1.4;
 `;
@@ -77,7 +77,7 @@ const Title = styled.h3`
 // Author and date metadata
 const Meta = styled.div`
   font-size: 12px;
-  color: #999;
+  color: var(--color-text-placeholder);
 `;
 
 // Circular delete button positioned at top-right corner of the card
@@ -90,15 +90,15 @@ const DeleteButton = styled.button`
   border-radius: 50%;
   border: none;
   background: rgba(255, 255, 255, 0.9);
-  color: #e74c3c;
+  color: var(--color-danger);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
 
   &:hover {
-    background: #e74c3c;
-    color: #fff;
+    background: var(--color-danger);
+    color: var(--color-text-inverse);
   }
 `;
 
@@ -106,7 +106,7 @@ const DeleteButton = styled.button`
 const EmptyState = styled.div`
   text-align: center;
   padding: 64px;
-  color: #999;
+  color: var(--color-text-placeholder);
   grid-column: 1 / -1;
 `;
 

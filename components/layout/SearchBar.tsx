@@ -25,25 +25,25 @@ const SearchContainer = styled.div`
 const Input = styled.input`
   flex: 1;
   padding: 12px 16px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   font-size: 15px;
   outline: none;
 
   &:focus {
-    border-color: #0066cc;
+    border-color: var(--color-primary);
   }
 
   &::placeholder {
-    color: #aaa;
+    color: var(--color-text-disabled);
   }
 `;
 
 // Submit button styled with primary blue color
 const Button = styled.button`
   padding: 12px 24px;
-  background: #0066cc;
-  color: #fff;
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
   border: none;
   border-radius: 8px;
   font-size: 15px;
@@ -51,7 +51,7 @@ const Button = styled.button`
   cursor: pointer;
 
   &:hover {
-    background: #0052a3;
+    background: var(--color-primary-dark);
   }
 `;
 

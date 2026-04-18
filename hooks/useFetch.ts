@@ -21,7 +21,10 @@ export function useFetch<T>(url: string, deps: unknown[] = []) {
     setState((s) => ({ ...s, loading: true, error: null }));
     try {
       const res = await fetch(url);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      if (!res.ok) {
+        setState({ data: null, loading: false, error: `HTTP ${res.status}` });
+        return;
+      }
       const data: T = await res.json();
       setState({ data, loading: false, error: null });
     } catch (err) {
@@ -31,7 +34,7 @@ export function useFetch<T>(url: string, deps: unknown[] = []) {
   }, [url, ...deps]);
 
   useEffect(() => {
-    fetchData();
+    void fetchData();
   }, [fetchData]);
 
   return { ...state, refetch: fetchData };

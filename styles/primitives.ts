@@ -29,7 +29,7 @@ export const AuthTitle = styled.h1`
 `;
 
 export const AuthSubtitle = styled.p`
-  color: #4b5563;
+  color: var(--color-text-muted);
   margin-bottom: 1.5rem;
 `;
 
@@ -64,7 +64,7 @@ export const TextInput = styled.input`
 
 export const PrimaryButton = styled.button`
   background-color: ${({ theme }) => theme.colors.primary};
-  color: white;
+  color: var(--color-text-inverse);
   padding: 0.5rem 1.5rem;
   border-radius: ${({ theme }) => theme.radii.md};
   font-weight: ${({ theme }) => theme.font.weight.medium};
@@ -116,15 +116,15 @@ export const ErrorText = styled.p`
 `;
 
 export const SuccessBox = styled.div`
-  background-color: #eff6ff;
-  border: 1px solid #bfdbfe;
+  background-color: var(--color-info-bg);
+  border: 1px solid var(--color-info-border);
   border-radius: ${({ theme }) => theme.radii.md};
   padding: 1rem;
   margin-bottom: 1rem;
 `;
 
 export const SuccessText = styled.p`
-  color: #1e40af;
+  color: var(--color-info);
   font-weight: ${({ theme }) => theme.font.weight.medium};
   margin: 0;
 `;
@@ -134,7 +134,7 @@ export const Divider = styled.div`
   align-items: center;
   gap: 1rem;
   margin: 1.5rem 0;
-  color: #6b7280;
+  color: var(--color-text-subtle);
   font-size: 0.875rem;
   &::before,
   &::after {
@@ -156,7 +156,7 @@ export const BrandLink = styled(Link)`
 
 export const FooterText = styled.p`
   font-size: 0.875rem;
-  color: #6b7280;
+  color: var(--color-text-subtle);
   text-align: center;
   margin-top: 1.5rem;
 `;

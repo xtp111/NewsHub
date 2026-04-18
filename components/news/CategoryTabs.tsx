@@ -23,17 +23,17 @@ const TabsContainer = styled.div`
 const Tab = styled.button<{ $active: boolean }>`
   padding: 8px 16px;
   border-radius: 20px;
-  border: 1px solid ${(props) => (props.$active ? "#0066cc" : "#e0e0e0")};
-  background: ${(props) => (props.$active ? "#0066cc" : "#fff")};
-  color: ${(props) => (props.$active ? "#fff" : "#555")};
+  border: 1px solid ${(props) => (props.$active ? "var(--color-primary)" : "var(--color-border)")};
+  background: ${(props) => (props.$active ? "var(--color-primary)" : "var(--color-bg)")};
+  color: ${(props) => (props.$active ? "var(--color-text-inverse)" : "var(--color-text-muted)")};
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
 
   &:hover {
-    border-color: #0066cc;
-    color: ${(props) => (props.$active ? "#fff" : "#0066cc")};
+    border-color: var(--color-primary);
+    color: ${(props) => (props.$active ? "var(--color-text-inverse)" : "var(--color-primary)")};
   }
 `;
 

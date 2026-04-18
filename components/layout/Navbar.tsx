@@ -13,8 +13,8 @@ const Nav = styled.nav`
   top: 0;
   left: 0;
   right: 0;
-  background: #fff;
-  border-bottom: 1px solid #e8e8e8;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border-subtle);
   z-index: 100;
 `;
 
@@ -33,12 +33,12 @@ const NavBar = styled.div`
 const Logo = styled(Link)`
   font-size: 20px;
   font-weight: 700;
-  color: #1a1a1a;
+  color: var(--color-text);
   text-decoration: none;
   flex-shrink: 0;
 
   &:hover {
-    color: #0066cc;
+    color: var(--color-primary);
   }
 `;
 
@@ -53,12 +53,12 @@ const NavLinks = styled.div`
 
 const NavLink = styled(Link)`
   font-size: 15px;
-  color: #555;
+  color: var(--color-text-muted);
   text-decoration: none;
   font-weight: 500;
 
   &:hover {
-    color: #0066cc;
+    color: var(--color-primary);
   }
 `;
 
@@ -75,7 +75,7 @@ const RightSection = styled.div`
 
 const UserEmail = styled.span`
   font-size: 13px;
-  color: #666;
+  color: var(--color-text-subtle);
   max-width: 160px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -84,29 +84,29 @@ const UserEmail = styled.span`
 
 const LogoutButton = styled.button`
   background: none;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--color-border);
   border-radius: 6px;
   padding: 4px 12px;
   font-size: 13px;
-  color: #555;
+  color: var(--color-text-muted);
   cursor: pointer;
   white-space: nowrap;
 
   &:hover {
-    border-color: #0066cc;
-    color: #0066cc;
+    border-color: var(--color-primary);
+    color: var(--color-primary);
   }
 `;
 
 const LoginLink = styled(Link)`
-  color: #0066cc;
+  color: var(--color-primary);
   font-weight: 500;
   text-decoration: none;
   font-size: 14px;
   white-space: nowrap;
 
   &:hover {
-    color: #0052a3;
+    color: var(--color-primary-dark);
   }
 `;
 
@@ -116,7 +116,7 @@ const HamburgerButton = styled.button`
   border: none;
   cursor: pointer;
   padding: 8px;
-  color: #555;
+  color: var(--color-text-muted);
 
   @media (max-width: 640px) {
     display: flex;
@@ -129,7 +129,7 @@ const MobileMenu = styled.div<{ $open: boolean }>`
   display: ${({ $open }) => ($open ? "flex" : "none")};
   flex-direction: column;
   padding: 12px 24px 16px;
-  border-top: 1px solid #e8e8e8;
+  border-top: 1px solid var(--color-border-subtle);
   gap: 4px;
 
   @media (min-width: 641px) {
@@ -139,18 +139,18 @@ const MobileMenu = styled.div<{ $open: boolean }>`
 
 const MobileNavLink = styled(Link)`
   font-size: 15px;
-  color: #555;
+  color: var(--color-text-muted);
   text-decoration: none;
   font-weight: 500;
   padding: 10px 0;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--color-bg-subtle);
 
   &:last-of-type {
     border-bottom: none;
   }
 
   &:hover {
-    color: #0066cc;
+    color: var(--color-primary);
   }
 `;
 
@@ -164,7 +164,7 @@ const MobileAuthRow = styled.div`
 
 const MobileUserEmail = styled.span`
   font-size: 13px;
-  color: #666;
+  color: var(--color-text-subtle);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -176,14 +176,14 @@ const MobileUserEmail = styled.span`
 function HamburgerIcon({ open }: { open: boolean }) {
   return open ? (
     <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-      <line x1="4" y1="4" x2="18" y2="18" stroke="#555" strokeWidth="2" strokeLinecap="round" />
-      <line x1="18" y1="4" x2="4" y2="18" stroke="#555" strokeWidth="2" strokeLinecap="round" />
+      <line x1="4" y1="4" x2="18" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <line x1="18" y1="4" x2="4" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
     </svg>
   ) : (
     <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-      <line x1="3" y1="6" x2="19" y2="6" stroke="#555" strokeWidth="2" strokeLinecap="round" />
-      <line x1="3" y1="11" x2="19" y2="11" stroke="#555" strokeWidth="2" strokeLinecap="round" />
-      <line x1="3" y1="16" x2="19" y2="16" stroke="#555" strokeWidth="2" strokeLinecap="round" />
+      <line x1="3" y1="6" x2="19" y2="6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <line x1="3" y1="11" x2="19" y2="11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <line x1="3" y1="16" x2="19" y2="16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
     </svg>
   );
 }

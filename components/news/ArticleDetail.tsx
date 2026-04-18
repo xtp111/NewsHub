@@ -18,7 +18,7 @@ import type { Article } from "@/types";
 /* --- Styled Components --- */
 
 const Container = styled.article`
-  background: #fff;
+  background: var(--color-bg);
 `;
 
 const Header = styled.header`
@@ -28,14 +28,14 @@ const Header = styled.header`
 // Category label at the top of the article
 const Category = styled.span`
   font-size: 14px;
-  color: #0066cc;
+  color: var(--color-primary);
   font-weight: 500;
 `;
 
 const Title = styled.h1`
   font-size: 32px;
   font-weight: 700;
-  color: #1a1a1a;
+  color: var(--color-text);
   margin: 16px 0;
   line-height: 1.3;
 `;
@@ -45,7 +45,7 @@ const Meta = styled.div`
   display: flex;
   gap: 16px;
   font-size: 14px;
-  color: #666;
+  color: var(--color-text-subtle);
   margin-bottom: 24px;
 `;
 
@@ -53,12 +53,12 @@ const Meta = styled.div`
 const ImageWrapper = styled.div`
   width: 100%;
   height: 400px;
-  background: #f0f0f0;
+  background: var(--color-bg-subtle);
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #999;
+  color: var(--color-text-placeholder);
   margin-bottom: 32px;
   overflow: hidden;
 `;
@@ -74,7 +74,7 @@ const ArticleImage = styled.img`
 const Content = styled.div`
   font-size: 17px;
   line-height: 1.8;
-  color: #333;
+  color: var(--color-text-secondary);
 
   p {
     margin-bottom: 20px;
@@ -85,7 +85,7 @@ const Content = styled.div`
 const ReadMoreLink = styled.a`
   display: inline-block;
   margin-top: 8px;
-  color: #0066cc;
+  color: var(--color-primary);
   font-weight: 500;
   font-size: 16px;
   text-decoration: none;
@@ -101,21 +101,21 @@ const Actions = styled.div`
   gap: 16px;
   margin-top: 32px;
   padding-top: 24px;
-  border-top: 1px solid #e8e8e8;
+  border-top: 1px solid var(--color-border-subtle);
 `;
 
 // Action button with active state styling for the "liked" state
 const ActionButton = styled.button<{ $active?: boolean }>`
   padding: 10px 20px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--color-border);
   border-radius: 6px;
-  background: ${(props) => (props.$active ? "#0066cc" : "#fff")};
-  color: ${(props) => (props.$active ? "#fff" : "#555")};
+  background: ${(props) => (props.$active ? "var(--color-primary)" : "var(--color-bg)")};
+  color: ${(props) => (props.$active ? "var(--color-text-inverse)" : "var(--color-text-muted)")};
   font-size: 14px;
   cursor: pointer;
 
   &:hover {
-    border-color: #0066cc;
+    border-color: var(--color-primary);
   }
 `;
 

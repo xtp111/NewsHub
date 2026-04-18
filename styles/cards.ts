@@ -16,7 +16,7 @@ export const Card = styled.div`
 export const ImageWrapper = styled.div<{ $height?: string }>`
   width: 100%;
   height: ${({ $height }) => $height ?? '180px'};
-  background: #f0f0f0;
+  background: var(--color-bg-subtle);
   display: flex;
   align-items: center;
   justify-content: center;

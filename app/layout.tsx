@@ -15,6 +15,7 @@ import "./globals.css";
 import { StyledRegistry, ClientProviders } from "./providers";
 import Navbar from "@/components/layout/Navbar";
 import { createClient } from "@/lib/supabase/server";
+import React from "react";
 
 // Application-wide metadata for SEO
 export const metadata: Metadata = {

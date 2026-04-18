@@ -11,7 +11,7 @@ const Container = styled.div`
   max-width: 800px;
   margin: 0 auto;
   padding: 0 5%;
-  background-color: white;
+  background-color: var(--color-bg);
 `;
 
 export default function ArticlePage() {

@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
+import { useImageFallback } from "@/hooks/useImageFallback";
 
 const Wrapper = styled.div<{ $height?: string }>`
   width: 100%;
   height: ${({ $height }) => $height ?? "180px"};
-  background: #f0f0f0;
+  background: var(--color-bg-subtle);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -28,12 +29,14 @@ interface FallbackImageProps {
 }
 
 export default function FallbackImage({ src, alt, height }: FallbackImageProps) {
-  const [error, setError] = useState(false);
+  const { hasError, onError, reset } = useImageFallback();
+
+  useEffect(() => { reset(); }, [src]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Wrapper $height={height}>
-      {src && !error ? (
-        <Img src={src} alt={alt} onError={() => setError(true)} />
+      {src && !hasError ? (
+        <Img src={src} alt={alt} onError={onError} />
       ) : (
         "No Image"
       )}
