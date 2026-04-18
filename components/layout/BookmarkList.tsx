@@ -125,9 +125,9 @@ const StyledLink = styled(Link)`
  */
 function BookmarkImage({ src, alt }: { src: string; alt: string }) {
   const [error, setError] = useState(false);
-  if (!src || error) return <>No Image</>;
+  const imgSrc = src && !error ? src : "/placeholder.png";
   return (
-    <ThumbnailImage src={src} alt={alt} onError={() => setError(true)} />
+    <ThumbnailImage src={imgSrc} alt={alt} onError={() => setError(true)} />
   );
 }
 

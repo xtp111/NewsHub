@@ -224,15 +224,11 @@ export default function ArticleDetail({ article }: { article: Article }) {
 
       {/* Hero image with fallback */}
       <ImageWrapper>
-        {article.imageUrl && !imgError ? (
-          <ArticleImage
-            src={article.imageUrl}
-            alt={article.title}
-            onError={() => setImgError(true)}
-          />
-        ) : (
-          "No Image"
-        )}
+        <ArticleImage
+          src={article.imageUrl && !imgError ? article.imageUrl : "/placeholder.png"}
+          alt={article.title}
+          onError={() => setImgError(true)}
+        />
       </ImageWrapper>
 
       {/* Article body content and "Read full article" link */}
