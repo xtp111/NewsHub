@@ -31,15 +31,15 @@ const NavBar = styled.div`
 `;
 
 const Logo = styled(Link)`
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--color-text);
-  text-decoration: none;
-  flex-shrink: 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--color-text);
+    text-decoration: none;
+    flex-shrink: 0;
 
-  &:hover {
-    color: var(--color-primary);
-  }
+    &:hover {
+        color: var(--color-primary);
+    }
 `;
 
 const NavLinks = styled.div`
