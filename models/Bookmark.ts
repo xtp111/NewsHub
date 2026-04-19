@@ -12,6 +12,11 @@
 import mongoose from "mongoose";
 
 const BookmarkSchema = new mongoose.Schema({
+  userId: {
+    type: String,
+    required: true,
+    index: true,
+  },
   articleId: {
     type: String,
     required: true,
@@ -50,8 +55,8 @@ const BookmarkSchema = new mongoose.Schema({
   },
 });
 
-// Unique index on articleId to prevent duplicate bookmarks for the same article
-BookmarkSchema.index({ articleId: 1 }, { unique: true });
+// Each user can bookmark an article once, while different users can bookmark the same article.
+BookmarkSchema.index({ userId: 1, articleId: 1 }, { unique: true });
 
 // Reuse existing model if already compiled (prevents hot-reload errors)
 export default mongoose.models.Bookmark ||

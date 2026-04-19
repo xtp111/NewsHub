@@ -144,14 +144,14 @@ export default function ArticleDetail({ article }: { article: Article }) {
   useEffect(() => {
     let cancelled = false;
     fetch(`/api/likes/${article.id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (!cancelled) {
-          setLikes(data.count);
-          setHasLiked(data.hasLiked);
-        }
-      })
-      .catch((error) => console.error("Failed to fetch likes:", error));
+        .then((res) => res.json())
+        .then((data) => {
+          if (!cancelled) {
+            setLikes(data.count);
+            setHasLiked(data.hasLiked);
+          }
+        })
+        .catch((error) => console.error("Failed to fetch likes:", error));
     // Cleanup function to prevent state updates on unmounted component
     return () => {
       cancelled = true;
@@ -209,52 +209,52 @@ export default function ArticleDetail({ article }: { article: Article }) {
   };
 
   return (
-    <Container>
-      {/* Article header: category, title, and metadata */}
-      <Header>
-        <Category>{article.category}</Category>
-        <Title>{article.title}</Title>
-        <Meta>
-          <span>{article.author}</span>
-          <span>
+      <Container>
+        {/* Article header: category, title, and metadata */}
+        <Header>
+          <Category>{article.category}</Category>
+          <Title>{article.title}</Title>
+          <Meta>
+            <span>{article.author}</span>
+            <span>
             {new Date(article.publishedAt).toLocaleString("en-US")}
           </span>
-        </Meta>
-      </Header>
+          </Meta>
+        </Header>
 
-      {/* Hero image with fallback */}
-      <ImageWrapper>
-        <ArticleImage
-          src={article.imageUrl && !imgError ? article.imageUrl : "/placeholder.png"}
-          alt={article.title}
-          onError={() => setImgError(true)}
-        />
-      </ImageWrapper>
+        {/* Hero image with fallback */}
+        <ImageWrapper>
+          <ArticleImage
+              src={article.imageUrl && !imgError ? article.imageUrl : "/placeholder.png"}
+              alt={article.title}
+              onError={() => setImgError(true)}
+          />
+        </ImageWrapper>
 
-      {/* Article body content and "Read full article" link */}
-      <Content>
-        <p>{article.content ? cleanContent(article.content) : article.summary}</p>
-        {article.sourceUrl && (
-          <ReadMoreLink
-            href={article.sourceUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read full article &rarr;
-          </ReadMoreLink>
-        )}
-      </Content>
+        {/* Article body content and "Read full article" link */}
+        <Content>
+          <p>{article.content ? cleanContent(article.content) : article.summary}</p>
+          {article.sourceUrl && (
+              <ReadMoreLink
+                  href={article.sourceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+              >
+                Read full article &rarr;
+              </ReadMoreLink>
+          )}
+        </Content>
 
-      {/* Like, Bookmark, and Share action buttons */}
-      <Actions>
-        <ActionButton $active={hasLiked} onClick={handleLike}>
-          {hasLiked ? "Liked" : "Like"} ({likes})
-        </ActionButton>
-        <ActionButton $active={bookmarked} onClick={handleBookmark}>
-          {bookmarked ? "Bookmarked" : "Bookmark"}
-        </ActionButton>
-        <ActionButton onClick={handleShare}>{shareText}</ActionButton>
-      </Actions>
-    </Container>
+        {/* Like, Bookmark, and Share action buttons */}
+        <Actions>
+          <ActionButton $active={hasLiked} onClick={handleLike}>
+            {hasLiked ? "Liked" : "Like"} ({likes})
+          </ActionButton>
+          <ActionButton $active={bookmarked} onClick={handleBookmark}>
+            {bookmarked ? "Bookmarked" : "Bookmark"}
+          </ActionButton>
+          <ActionButton onClick={handleShare}>{shareText}</ActionButton>
+        </Actions>
+      </Container>
   );
 }

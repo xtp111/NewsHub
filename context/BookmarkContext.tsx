@@ -30,6 +30,8 @@ interface BookmarkContextType {
   addBookmark: (article: Article) => Promise<boolean>;
   removeBookmark: (bookmarkId: string) => Promise<boolean>;
   isBookmarked: (articleId: string) => boolean;
+  lastError: string | null;
+  clearError: () => void;
 }
 
 // Create context with undefined default (enforced by useBookmarks hook)
@@ -43,6 +45,7 @@ const BookmarkContext = createContext<BookmarkContextType | undefined>(
 export function BookmarkProvider({ children }: { children: ReactNode }) {
   const [bookmarks, setBookmarks] = useState<BookmarkData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [lastError, setLastError] = useState<string | null>(null);
 
   // Fetch all bookmarks from the API when the provider mounts
   useEffect(() => {
@@ -54,9 +57,23 @@ export function BookmarkProvider({ children }: { children: ReactNode }) {
     try {
       const res = await fetch("/api/bookmarks");
       const data = await res.json();
-      setBookmarks(data.bookmarks || []);
+      if (res.ok) {
+        setBookmarks(data.bookmarks || []);
+        setLastError(null);
+        return;
+      }
+
+      // Treat unauthenticated state as an empty personal bookmark list.
+      if (res.status === 401) {
+        setBookmarks([]);
+        setLastError(null);
+        return;
+      }
+
+      setLastError(data.message || data.error || "Failed to fetch bookmarks.");
     } catch (error) {
       console.error("Failed to fetch bookmarks:", error);
+      setLastError("Failed to fetch bookmarks.");
     } finally {
       setLoading(false);
     }
@@ -80,15 +97,23 @@ export function BookmarkProvider({ children }: { children: ReactNode }) {
         }),
       });
 
+      const data = await res.json();
+
       if (res.ok) {
-        const data = await res.json();
-        // Prepend new bookmark to the list (newest first)
-        setBookmarks((prev) => [data.bookmark, ...prev]);
+        setLastError(null);
+        setBookmarks((prev) => {
+          const exists = prev.some((b) => b.articleId === data.bookmark.articleId);
+          return exists ? prev : [data.bookmark, ...prev];
+        });
         return true;
       }
+
+      setLastError(data.message || data.error || "Failed to add bookmark.");
+      console.error("Failed to add bookmark:", data.message || data.error);
       return false;
     } catch (error) {
       console.error("Failed to add bookmark:", error);
+      setLastError("Failed to add bookmark.");
       return false;
     }
   };
@@ -100,14 +125,21 @@ export function BookmarkProvider({ children }: { children: ReactNode }) {
         method: "DELETE",
       });
 
+      const data = await res.json();
+
       if (res.ok) {
         // Remove the deleted bookmark from local state
         setBookmarks((prev) => prev.filter((b) => b._id !== bookmarkId));
+        setLastError(null);
         return true;
       }
+
+      setLastError(data.message || data.error || "Failed to remove bookmark.");
+      console.error("Failed to remove bookmark:", data.message || data.error);
       return false;
     } catch (error) {
       console.error("Failed to remove bookmark:", error);
+      setLastError("Failed to remove bookmark.");
       return false;
     }
   };
@@ -125,6 +157,8 @@ export function BookmarkProvider({ children }: { children: ReactNode }) {
         addBookmark,
         removeBookmark,
         isBookmarked,
+        lastError,
+        clearError: () => setLastError(null),
       }}
     >
       {children}
