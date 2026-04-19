@@ -1,6 +1,6 @@
 /**
  * Root Layout
- *
+ * Member:
  * The top-level layout component for the entire Next.js application.
  * Responsibilities:
  * - Sets HTML metadata (title, description)
@@ -12,13 +12,14 @@
 
 import type { Metadata } from "next";
 import "./globals.css";
-import StyledComponentsRegistry from "./registry";
-import Navbar from "./components/Navbar";
+import { StyledRegistry, ClientProviders } from "./providers";
+import Navbar from "@/components/layout/Navbar";
 import { createClient } from "@/lib/supabase/server";
+import React from "react";
 
 // Application-wide metadata for SEO
 export const metadata: Metadata = {
-  title: "NewsHub",
+  title: "NewsHub | CS601 GW",
   description: "Get the latest news updates",
 };
 
@@ -36,12 +37,12 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body>
-        <StyledComponentsRegistry>
-          {/* Navbar receives user prop for conditional auth display */}
-          <Navbar user={user} />
-          {/* Main content area offset by navbar height (64px) */}
-          <main style={{ paddingTop: "64px" }}>{children}</main>
-        </StyledComponentsRegistry>
+        <StyledRegistry>
+          <ClientProviders>
+            <Navbar user={user} />
+            <main style={{ paddingTop: "64px" }}>{children}</main>
+          </ClientProviders>
+        </StyledRegistry>
       </body>
     </html>
   );

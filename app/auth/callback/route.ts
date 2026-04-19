@@ -35,7 +35,7 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  // Failure: redirect to login with an error indicator
+  // Failure: redirect to log in with an error indicator
   const loginUrl = request.nextUrl.clone();
   loginUrl.pathname = "/login";
   loginUrl.searchParams.set("error", "auth_callback_error");

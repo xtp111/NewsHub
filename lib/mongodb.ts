@@ -16,19 +16,20 @@ interface MongooseCache {
   promise: Promise<typeof mongoose> | null;
 }
 
-// Extend the global namespace to store the Mongoose connection cache
-declare global {
-  // eslint-disable-next-line no-var
-  var mongoose: MongooseCache | undefined;
-}
+// Store the Mongoose connection cache globally
+const globalForMongoose = globalThis as {
+  mongoose?: MongooseCache;
+};
 
 // Initialize cache from global or create a new empty cache
-const cached: MongooseCache = global.mongoose ?? { conn: null, promise: null };
+const cached =
+    globalForMongoose.mongoose ?? { conn: null, promise: null };
 
 // Store the cache reference on the global object for reuse across hot-reloads
-if (!global.mongoose) {
-  global.mongoose = cached;
+if (!globalForMongoose.mongoose) {
+  globalForMongoose.mongoose = cached;
 }
+
 
 /**
  * Establishes or reuses a MongoDB connection.
