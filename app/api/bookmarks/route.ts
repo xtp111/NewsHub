@@ -4,7 +4,7 @@ import Bookmark from "@/models/Bookmark";
 import { ok, fail } from "@/lib/api/respond";
 import { createClient } from "@/lib/supabase/server";
 
-// 获取当前登录用户 ID（生产环境可用）
+
 async function getAuthenticatedUserId() {
   const supabase = await createClient();
   const {
@@ -13,7 +13,7 @@ async function getAuthenticatedUserId() {
   return user?.id ?? null;
 }
 
-/* --- GET: 获取当前用户的所有书签 --- */
+
 export async function GET() {
   try {
     const userId = await getAuthenticatedUserId();
@@ -28,7 +28,7 @@ export async function GET() {
   }
 }
 
-/* --- POST: 添加书签（必须有 userId） --- */
+
 export async function POST(request: NextRequest) {
   try {
     const userId = await getAuthenticatedUserId();
