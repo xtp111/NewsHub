@@ -5,12 +5,12 @@ import { ok, fail } from "@/lib/api/respond";
 
 export async function DELETE(
     _request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectDB();
 
-    const { id } = params;
+    const { id } = await params;
 
     const deleted = await Bookmark.findByIdAndDelete(id);
     if (!deleted) return fail(404, "Bookmark not found");
