@@ -1,5 +1,7 @@
 # NewsHub
 
+https://news-hub-6gcx.vercel.app/
+
 NewsHub is a news aggregation application built with Next.js 16.2.0, React 19, TypeScript, and styled-components. It fetches news content from NewsAPI.org, handles user authentication via Supabase Auth, and persists bookmarks and likes using MongoDB + Mongoose.
 
 The current implementation includes browsing, category filtering, keyword search, article detail view, likes, bookmarks, and a complete authentication flow.
