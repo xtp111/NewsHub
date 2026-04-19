@@ -1,27 +1,23 @@
-NewsHub
-NewsHub is a news aggregation application built with Next.js 16.2.0, React 19, TypeScript, and styled-components.
-It fetches news content from NewsAPI.org, handles user authentication via Supabase Auth, and persists bookmarks and likes using MongoDB + Mongoose.
+# NewsHub
+
+NewsHub is a news aggregation application built with Next.js 16.2.0, React 19, TypeScript, and styled-components. It fetches news content from NewsAPI.org, handles user authentication via Supabase Auth, and persists bookmarks and likes using MongoDB + Mongoose.
 
 The current implementation includes browsing, category filtering, keyword search, article detail view, likes, bookmarks, and a complete authentication flow.
 
-Tech Stack
-Frontend Framework: Next.js 16.2.0, React 19
+## Tech Stack
 
-Language: TypeScript
+- **Frontend Framework**: Next.js 16.2.0, React 19
+- **Language**: TypeScript
+- **Styling**: styled-components
+- **Authentication**: Supabase Auth
+- **Database**: MongoDB + Mongoose
+- **External Content Source**: NewsAPI.org
 
-Styling: styled-components
+## Project Structure
 
-Authentication: Supabase Auth
+The project uses the App Router and follows Next.js 16 conventions. The root-level `proxy.ts` file replaces the old Middleware in Next.js 16.
 
-Database: MongoDB + Mongoose
-
-External Content Source: NewsAPI.org
-
-Project Structure
-The project uses the App Router and follows Next.js 16 conventions.
-The root-level proxy.ts file replaces the old Middleware in Next.js 16.
-
-代码
+```
 .
 |-- app/
 |   |-- actions/
@@ -74,181 +70,153 @@ The root-level proxy.ts file replaces the old Middleware in Next.js 16.
 |-- proxy.ts                        # Request proxy + session refresh
 |-- package.json
 `-- tsconfig.json
-Core Modules
-1. Routing & Pages
-app/page.tsx — Homepage showing latest news
+```
 
-app/search/page.tsx — Keyword search results
+## Core Modules
 
-app/article/[id]/page.tsx — Article detail view
+### 1. Routing & Pages
 
-app/bookmarks/page.tsx — User bookmarks
+- **app/page.tsx** — Homepage showing latest news
+- **app/search/page.tsx** — Keyword search results
+- **app/article/[id]/page.tsx** — Article detail view
+- **app/bookmarks/page.tsx** — User bookmarks
+- **app/login / signup / forgot-password / reset-password** — Full auth flow
 
-app/login / signup / forgot-password / reset-password — Full auth flow
+### 2. API Layer
 
-2. API Layer
-/api/news
+- **GET /api/news**
+  - Fetch news list
+  - Category filtering
+  - Keyword search
+  - Article detail
+  - Includes 15-minute in-memory caching
 
-Fetch news list
+- **POST /api/bookmarks**
+  - Get bookmarks
+  - Add bookmark
 
-Category filtering
+- **DELETE /api/bookmarks/[id]**
+  - Delete bookmark
 
-Keyword search
+- **POST/GET /api/likes/[id]**
+  - Get like count
+  - Toggle like
 
-Article detail
+### 3. Data & Services
 
-Includes 15‑minute in-memory caching
+- **Supabase Auth**
+  - Server-side client for SSR
+  - Browser client for client-side auth
 
-/api/bookmarks
+- **MongoDB + Mongoose**
+  - Bookmark model
+  - Like model
+  - Singleton connection to avoid hot-reload issues
 
-Get bookmarks
+- **BookmarkContext**
+  - Client-side global bookmark state
 
-Add bookmark
+### 4. Styling & Global Providers
 
-/api/bookmarks/[id]
+- **layout.tsx**
+  - Reads Supabase user on server
+  - Passes user to Navbar
 
-Delete bookmark
+- **registry.tsx**
+  - styled-components SSR
+  - GlobalStyles
+  - BookmarkProvider
 
-/api/likes/[id]
+## Implemented Features
 
-Get like count
+### News Homepage
 
-Toggle like
+- Fetches `/api/news?category=all`
+- Category tabs: All, Tech, World, Culture, Finance, Sports
+- Search bar
 
-3. Data & Services
-Supabase Auth
+### Keyword Search
 
-Server-side client for SSR
+- Route: `/search?q=keyword`
+- Shows result count, empty state
 
-Browser client for client-side auth
+### Article Detail
 
-MongoDB + Mongoose
+- Category, title, author, date
+- Cover image
+- Summary or content snippet
+- Link to original article
 
-Bookmark model
+### Likes
 
-Like model
+- Route: `/api/likes/[id]`
+- Toggle like
+- Persisted in MongoDB
+- Current implementation uses a unique index per article → like count is effectively 0 or 1
 
-Singleton connection to avoid hot-reload issues
+### Bookmarks
 
-BookmarkContext
+- Add / remove bookmark
+- Bookmark list page
+- Persisted in MongoDB
+- Current implementation is not user-isolated (global bookmarks)
 
-Client-side global bookmark state
+### Share
 
-4. Styling & Global Providers
-layout.tsx
+- Uses Web Share API when available
+- Fallback: copy link to clipboard
 
-Reads Supabase user on server
+### Authentication
 
-Passes user to Navbar
+- Email/password login
+- Email/password signup
+- Google OAuth
+- Forgot password email
+- Reset password flow
+- Session refresh via `proxy.ts`
+- Redirect logged-in users away from auth pages
 
-registry.tsx
+## Data Flow
 
-styled-components SSR
+### News Data
 
-GlobalStyles
+- Not stored in DB
+- Fetched from NewsAPI.org
+- Cached in memory for 15 minutes
+- Article ID = base64url(original URL)
 
-BookmarkProvider
+### Bookmarks & Likes
 
-Implemented Features
-News Homepage
-Fetches /api/news?category=all
+- Stored in MongoDB
+- Mongoose models reused safely across hot reloads
 
-Category tabs: All, Tech, World, Culture, Finance, Sports
+## Environment Variables
 
-Search bar
+### Required
 
-Keyword Search
-/search?q=keyword
-
-Shows result count, empty state
-
-Article Detail
-Category, title, author, date
-
-Cover image
-
-Summary or content snippet
-
-Link to original article
-
-Likes
-/api/likes/[id]
-
-Toggle like
-
-Persisted in MongoDB
-
-Current implementation uses a unique index per article → like count is effectively 0 or 1
-
-Bookmarks
-Add / remove bookmark
-
-Bookmark list page
-
-Persisted in MongoDB
-
-Current implementation is not user-isolated (global bookmarks)
-
-Share
-Uses Web Share API when available
-
-Fallback: copy link to clipboard
-
-Authentication
-Email/password login
-
-Email/password signup
-
-Google OAuth
-
-Forgot password email
-
-Reset password flow
-
-Session refresh via proxy.ts
-
-Redirect logged-in users away from auth pages
-
-Data Flow
-News Data
-Not stored in DB
-
-Fetched from NewsAPI.org
-
-Cached in memory for 15 minutes
-
-Article ID = base64url(original URL)
-
-Bookmarks & Likes
-Stored in MongoDB
-
-Mongoose models reused safely across hot reloads
-
-Environment Variables
-Required:
-
-代码
+```env
 NEWS_API_KEY=
 MONGODB_URI=
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
-Optional (for Google OAuth):
+```
+
+### Optional (for Google OAuth)
 
 Configure Google provider in Supabase console
 
-Local Development
-bash
+## Local Development
+
+```bash
 npm install
 npm run dev
-Default URL:
+```
 
-代码
-http://localhost:3000
-Current Limitations
-Bookmarks and likes are not user-isolated
+Default URL: `http://localhost:3000`
 
-Like model only supports 0/1 (not per-user likes)
+## Current Limitations
 
-No persistent article storage
-
-No automated tests yet
+- Bookmarks and likes are not user-isolated
+- Like model only supports 0/1 (not per-user likes)
+- No persistent article storage
+- No automated tests yet
