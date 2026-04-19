@@ -119,6 +119,17 @@ const ActionButton = styled.button<{ $active?: boolean }>`
   &:hover {
     border-color: #0066cc;
   }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+`;
+
+const StatusMessage = styled.p<{ $error?: boolean }>`
+  margin-top: 12px;
+  color: ${(props) => (props.$error ? "#b42318" : "#027a48")};
+  font-size: 14px;
 `;
 
 /* --- Helper Functions --- */
@@ -138,7 +149,16 @@ export default function ArticleDetail({ article }: { article: Article }) {
   const [hasLiked, setHasLiked] = useState(false);
   const [imgError, setImgError] = useState(false);
   const [shareText, setShareText] = useState("Share");
-  const { addBookmark, removeBookmark, isBookmarked, bookmarks } = useBookmarks();
+  const [bookmarkPending, setBookmarkPending] = useState(false);
+  const [bookmarkStatus, setBookmarkStatus] = useState<string | null>(null);
+  const {
+    addBookmark,
+    removeBookmark,
+    isBookmarked,
+    bookmarks,
+    lastError,
+    clearError,
+  } = useBookmarks();
   const bookmarked = isBookmarked(article.id);
 
   // Fetch the current like count when the component mounts or article changes.
@@ -200,13 +220,27 @@ export default function ArticleDetail({ article }: { article: Article }) {
 
   // Toggle bookmark: add if not bookmarked, remove if already bookmarked
   const handleBookmark = async () => {
-    if (bookmarked) {
-      const existing = bookmarks.find((b) => b.articleId === article.id);
-      if (existing) {
-        await removeBookmark(existing._id);
+    setBookmarkPending(true);
+    setBookmarkStatus(null);
+    clearError();
+
+    try {
+      if (bookmarked) {
+        const existing = bookmarks.find((b) => b.articleId === article.id);
+        if (existing) {
+          const removed = await removeBookmark(existing._id);
+          if (removed) {
+            setBookmarkStatus("Removed from your bookmarks.");
+          }
+        }
+      } else {
+        const added = await addBookmark(article);
+        if (added) {
+          setBookmarkStatus("Saved to your bookmarks.");
+        }
       }
-    } else {
-      await addBookmark(article);
+    } finally {
+      setBookmarkPending(false);
     }
   };
 
@@ -256,11 +290,21 @@ export default function ArticleDetail({ article }: { article: Article }) {
         <ActionButton $active={hasLiked} onClick={handleLike}>
           {hasLiked ? "Liked" : "Like"} ({likes})
         </ActionButton>
-        <ActionButton $active={bookmarked} onClick={handleBookmark}>
-          {bookmarked ? "Bookmarked" : "Bookmark"}
+        <ActionButton
+          $active={bookmarked}
+          onClick={handleBookmark}
+          disabled={bookmarkPending}
+        >
+          {bookmarkPending
+            ? "Saving..."
+            : bookmarked
+              ? "Bookmarked"
+              : "Bookmark"}
         </ActionButton>
         <ActionButton onClick={handleShare}>{shareText}</ActionButton>
       </Actions>
+      {bookmarkStatus && <StatusMessage>{bookmarkStatus}</StatusMessage>}
+      {lastError && <StatusMessage $error>{lastError}</StatusMessage>}
     </Container>
   );
 }
