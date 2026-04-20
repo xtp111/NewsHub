@@ -7,6 +7,8 @@ import { fetchFromNewsAPI } from "@/lib/news/newsapi";
 import { articleCache } from "@/lib/news/cache";
 import { decodeArticleId } from "@/lib/news/articleId";
 import { ok, fail } from "@/lib/api/respond";
+import connectDB from "@/lib/mongodb";
+import Bookmark from "@/models/Bookmark";
 
 export async function GET(request: NextRequest) {
   // Parse query parameters from request URL
@@ -20,7 +22,24 @@ export async function GET(request: NextRequest) {
     // Check in-memory cache first
     const cached = articleCache.get(id);
     if (cached) return ok({ article: cached });
-    // Fallback: reconstruct article from encoded URL if not cached
+    // Fallback: hydrate from bookmark snapshot so bookmarked articles survive cache eviction
+    await connectDB();
+    const bookmark = await Bookmark.findOne({ articleId: id }).lean();
+    if (bookmark) {
+      const article: Article = {
+        id,
+        title: bookmark.title,
+        summary: bookmark.summary,
+        category: bookmark.category,
+        author: bookmark.author,
+        publishedAt: new Date(bookmark.publishedAt).toISOString(),
+        imageUrl: bookmark.imageUrl || undefined,
+        sourceUrl: bookmark.sourceUrl || decodeArticleId(id),
+      };
+      articleCache.set(id, article);
+      return ok({ article });
+    }
+    // Last resort: reconstruct article from encoded URL if not cached and not bookmarked
     try {
       const sourceUrl = decodeArticleId(id);
       const stub: Article = {
