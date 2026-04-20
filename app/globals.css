@@ -8,14 +8,14 @@
 
 :root {
   /* Brand */
-  --color-primary: #3c975b;
-  --color-primary-dark: #386147;
+  --color-primary: seagreen;
+  --color-primary-dark: darkgreen;
 
   /* Neutrals */
   --color-bg: #ffffff;
-  --color-bg-subtle: #f0f0f0;
-  --color-border: #e0e0e0;
-  --color-border-subtle: #e8e8e8;
+  --color-bg-subtle: #f1f1f1;
+  --color-border: #e3e3e3;
+  --color-border-subtle: #cfcfcf;
 
   /* Text */
   --color-text: #1a1a1a;
@@ -25,7 +25,7 @@
   --color-text-inverse: #ffffff;
 
   /* Semantic */
-  --color-danger: #dc2626;
+  --color-danger: firebrick;
   --color-danger-bg: #fef2f2;
   --color-danger-border: #fecaca;
 
