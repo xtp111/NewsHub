@@ -41,7 +41,6 @@ const categories = [
   { id: "Sports", name: "Sports" },
 ];
 
-/* --- Component --- */
 
 export default function CategoryTabs({
   activeCategory,

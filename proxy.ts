@@ -1,16 +1,5 @@
-/**
- * Middleware (Proxy)
- *
- * Next.js middleware that runs on every request (except static assets).
- * Handles Supabase session management and auth-based route protection.
- *
- * Current behavior:
- * - Refreshes the Supabase auth session on every request via cookie handling
- * - Redirects authenticated users away from auth pages (login, signup, forgot-password)
- * - Future: Can be extended to protect specific routes for unauthenticated users
- *
- * The matcher config excludes static files and images from middleware processing.
- */
+// Member: Tianpeng Xu
+// Next.js middleware that runs on every request (except static assets), handling Supabase session & auth routes protection.
 
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse } from "next/server";
@@ -66,8 +55,8 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // Redirect unauthenticated users away from protected routes (if needed in future)
-  // Currently all main pages are public; uncomment and configure when needed:
+  // Redirect unauthenticated users away from protected routes (if needed in the future)
+  // Currently, all main pages are public; uncomment and configure when needed:
   // const protectedRoutes = ["/dashboard"];
   // const isProtected = protectedRoutes.some((p) => path.startsWith(p));
   // if (!user && isProtected) {

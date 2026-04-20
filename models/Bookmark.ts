@@ -1,13 +1,6 @@
-/**
- * Bookmark Mongoose Model
- *
- * Defines the MongoDB schema for bookmarked articles.
- * Each bookmark stores a snapshot of article metadata at the time of bookmarking.
- * The articleId field has a unique index to prevent duplicate bookmarks.
- *
- * Uses the "reuse existing model" pattern to avoid OverwriteModelError
- * during hot-reloads in development.
- */
+// Member: Tianpeng Xu
+// Bookmark Mongoose Model: MongoDB schema for bookmarked articles
+
 
 import mongoose from "mongoose";
 

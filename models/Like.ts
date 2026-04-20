@@ -1,14 +1,5 @@
-/**
- * Like Mongoose Model
- *
- * Defines the MongoDB schema for article likes.
- * Each document represents a single like on an article.
- * The articleId field has a unique index, allowing only one like per article
- * (simplified model without per-user tracking).
- *
- * Uses the "reuse existing model" pattern to avoid OverwriteModelError
- * during hot-reloads in development.
- */
+// Member: Tianpeng Xu
+// Bookmark Mongoose Model: MongoDB schema for article likes
 
 import mongoose from "mongoose";
 

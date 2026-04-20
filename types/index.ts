@@ -1,7 +1,6 @@
-/**
- * Shared type definitions for the NewsHub application.
- * These interfaces are used across both client components and API routes.
- */
+// Member: Tianpeng Xu
+// Interfaces for article & bookmark data
+
 
 // Represents a news article fetched from NewsAPI or stored in cache
 export interface Article {

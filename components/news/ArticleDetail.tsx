@@ -1,65 +1,56 @@
-/**
- * ArticleDetail Component
- *
- * Full article view with:
- * - Hero image with fallback on load error
- * - Article metadata (category, title, author, date)
- * - Article content with truncation marker cleanup
- * - "Read full article" link to the original news source
- * - Like button (persisted to MongoDB via /api/likes)
- * - Share button using Web Share API with clipboard fallback
- */
+// Member: Yuchen Bao
+// ArticleDetail: detailed info for article page
 
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useBookmarks } from "@/context/BookmarkContext";
 import type { Article } from "@/types";
 
-/* --- Styled Components --- */
+// Styled Components
 
 const Container = styled.article`
   background: var(--color-bg);
 `;
 
 const Header = styled.header`
-  margin-bottom: 32px;
+  margin-bottom: 2rem;
 `;
 
 // Category label at the top of the article
 const Category = styled.span`
-  font-size: 14px;
+  font-size: 0.9rem;
   color: var(--color-primary);
-  font-weight: 500;
+  font-weight: 600;
 `;
 
 const Title = styled.h1`
-  font-size: 32px;
+  font-size: 2rem;
   font-weight: 700;
   color: var(--color-text);
-  margin: 16px 0;
+  margin: 1rem 0;
   line-height: 1.3;
 `;
 
 // Author and date metadata row
 const Meta = styled.div`
   display: flex;
-  gap: 16px;
-  font-size: 14px;
+  gap: 1rem;
+  font-size: 0.9rem;
   color: var(--color-text-subtle);
-  margin-bottom: 24px;
+  margin-bottom: 2rem;
 `;
 
 // Hero image container with fixed height
 const ImageWrapper = styled.div`
   width: 100%;
-  height: 400px;
+  max-height: 60vh;
   background: var(--color-bg-subtle);
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--color-text-disabled);
-  margin-bottom: 32px;
+  margin-bottom: 2.5rem;
   overflow: hidden;
 `;
 
@@ -72,22 +63,22 @@ const ArticleImage = styled.img`
 
 // Article body text area
 const Content = styled.div`
-  font-size: 17px;
+  font-size: 1rem;
   line-height: 1.8;
   color: var(--color-text-secondary);
 
   p {
-    margin-bottom: 20px;
+    margin-bottom: 1.5rem;
   }
 `;
 
 // Link to original article source
 const ReadMoreLink = styled.a`
   display: inline-block;
-  margin-top: 8px;
+  margin-top: 1rem;
   color: var(--color-primary);
   font-weight: 500;
-  font-size: 16px;
+  font-size: 1rem;
   text-decoration: none;
 
   &:hover {
@@ -98,20 +89,20 @@ const ReadMoreLink = styled.a`
 // Action buttons row (like, share)
 const Actions = styled.div`
   display: flex;
-  gap: 16px;
-  margin-top: 32px;
-  padding-top: 24px;
+  gap: 1rem;
+  margin-top: 3rem;
+  padding-top: 2rem;
   border-top: 1px solid var(--color-border-subtle);
 `;
 
 // Action button with active state styling for the "liked" state
 const ActionButton = styled.button<{ $active?: boolean }>`
-  padding: 10px 20px;
+  padding: 0.5rem 1rem;
   border: 1px solid var(--color-border);
   border-radius: 6px;
   background: ${(props) => (props.$active ? "var(--color-primary)" : "var(--color-bg)")};
   color: ${(props) => (props.$active ? "var(--color-text-inverse)" : "var(--color-text-subtle)")};
-  font-size: 14px;
+  font-size: 0.85rem;
   cursor: pointer;
 
   &:hover {
@@ -119,17 +110,12 @@ const ActionButton = styled.button<{ $active?: boolean }>`
   }
 `;
 
-/* --- Helper Functions --- */
 
-/**
- * Cleans truncated content from NewsAPI by removing the "[+N chars]" marker
- * and replacing it with an ellipsis.
- */
+// Function: Cleans truncated content from NewsAPI by removing the "[+N chars]" marker and replacing it with an ellipsis
 function cleanContent(content: string): string {
   return content.replace(/\[\+\d+ chars]$/, "...");
 }
 
-/* --- Component --- */
 
 export default function ArticleDetail({ article }: { article: Article }) {
   const [likes, setLikes] = useState(0);

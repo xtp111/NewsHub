@@ -1,3 +1,6 @@
+// Member: Yuchen Bao
+// AsyncBoundary: handle fallback when loading
+
 "use client";
 
 interface AsyncBoundaryProps {

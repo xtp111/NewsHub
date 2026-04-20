@@ -1,12 +1,10 @@
 // Member: Yuchen Bao
 // NewsCard: Displays a single news article as a card in the news grid.
 
-//import { Card, CardImageWrapper, CardThumbnail, CardContent, CardLink, CardTitle, CardCategory, CardMeta } from "@/components/primitives";
 import { useState } from "react";
 import Link from "next/link";
 import styled from "styled-components";
 import type { Article } from "@/types";
-
 
 // Styled components
 const Card = styled.div`

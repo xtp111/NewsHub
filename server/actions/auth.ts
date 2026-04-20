@@ -1,17 +1,5 @@
-/**
- * Server Actions - Authentication
- *
- * Collection of server-side actions for Supabase authentication.
- * These are called from client components using React 19's useActionState.
- *
- * Actions:
- * - login: Email/password sign in
- * - signup: New account registration with email confirmation
- * - forgotPassword: Send password reset email
- * - resetPassword: Update password using reset token
- * - logout: Sign out and redirect to login
- * - signInWithGoogle: Initiate Google OAuth flow
- */
+// Member: Tianpeng Xu
+// Server-side actions for Supabase authentication
 
 "use server";
 
