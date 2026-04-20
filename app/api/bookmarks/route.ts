@@ -1,10 +1,16 @@
+// Member: Tianpeng Xu
+// API routes for managing user bookmarks (fetching and creating)
+
 import { NextRequest } from "next/server";
 import connectDB from "@/lib/mongodb";
 import Bookmark from "@/models/Bookmark";
 import { ok, fail } from "@/lib/api/respond";
+
 import { createClient } from "@/lib/supabase/server";
 
+// API routes for managing user bookmarks (fetching and creating)
 
+// Retrieves the currently authenticated Supabase user ID (or null if not logged in)
 async function getAuthenticatedUserId() {
   const supabase = await createClient();
   const {
@@ -13,7 +19,7 @@ async function getAuthenticatedUserId() {
   return user?.id ?? null;
 }
 
-
+// GET /bookmarks - returns all bookmarks for the authenticated user
 export async function GET() {
   try {
     const userId = await getAuthenticatedUserId();
@@ -28,7 +34,7 @@ export async function GET() {
   }
 }
 
-
+// POST /bookmarks - creates a new bookmark for the authenticated user
 export async function POST(request: NextRequest) {
   try {
     const userId = await getAuthenticatedUserId();

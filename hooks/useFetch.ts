@@ -1,11 +1,16 @@
+// Member: Yuchen Bao
+// Hook for fetching data from NewsAPI
+
 import { useState, useEffect, useCallback } from "react";
 
+// Shape of fetch state
 interface FetchState<T> {
   data: T | null;
   loading: boolean;
   error: string | null;
 }
 
+// Generic data-fetching React hook
 export function useFetch<T>(url: string, deps: unknown[] = []) {
   const [state, setState] = useState<FetchState<T>>({
     data: null,
@@ -13,6 +18,7 @@ export function useFetch<T>(url: string, deps: unknown[] = []) {
     error: null,
   });
 
+  // Fetch data from API
   const fetchData = useCallback(async () => {
     if (!url) {
       setState({ data: null, loading: false, error: null });
@@ -30,9 +36,9 @@ export function useFetch<T>(url: string, deps: unknown[] = []) {
     } catch (err) {
       setState({ data: null, loading: false, error: (err as Error).message });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url, ...deps]);
 
+  // Trigger fetch on dependency change
   useEffect(() => {
     void fetchData();
   }, [fetchData]);

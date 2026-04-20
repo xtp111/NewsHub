@@ -1,12 +1,5 @@
-/**
- * MongoDB Connection Utility
- *
- * Manages a singleton MongoDB connection using Mongoose.
- * Caches the connection on the Node.js global object to prevent
- * creating multiple connections during hot-reloads in development.
- *
- * Usage: `await connectDB()` before any Mongoose model operations.
- */
+// Member: Tianpeng Xu
+// MongoDB Connection Utility
 
 import mongoose from "mongoose";
 
@@ -31,11 +24,9 @@ if (!globalForMongoose.mongoose) {
 }
 
 
-/**
- * Establishes or reuses a MongoDB connection.
- * Validates MONGODB_URI at runtime (not module load) to avoid build-time errors
- * on platforms like Vercel where env vars aren't available during `next build`.
- */
+// connectDB: Establishes or reuses a MongoDB connection.
+// Validates MONGODB_URI at runtime (not module load) to avoid build-time errors
+// on platforms like Vercel where env vars aren't available during `next build`.
 async function connectDB(): Promise<typeof mongoose> {
   const MONGODB_URI = process.env.MONGODB_URI;
 

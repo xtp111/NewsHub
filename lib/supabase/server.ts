@@ -1,13 +1,8 @@
-/**
- * Supabase Server Client
- *
- * Creates a Supabase client for use in Server Components, Server Actions, and Route Handlers.
- * Uses createServerClient from @supabase/ssr with cookie-based session management.
- * The cookie handler reads from and writes to the Next.js cookies() store.
- *
- * Note: setAll may fail silently when called from Server Components where cookies
- * are read-only. This is expected and handled gracefully.
- */
+// Member: Tianpeng Xu
+// Supabase Server Client:
+// Creates a Supabase client for use in Server Components, Server Actions, and Route Handlers.
+// Uses createServerClient from @supabase/ssr with cookie-based session management.
+// The cookie handler reads from and writes to the Next.js cookies() store.
 
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";

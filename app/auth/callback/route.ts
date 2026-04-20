@@ -1,15 +1,5 @@
-/**
- * Auth Callback Route - /auth/callback
- *
- * Handles the OAuth/email callback from Supabase authentication.
- * After a user signs in (via Google OAuth or email confirmation link),
- * Supabase redirects here with a "code" query parameter.
- *
- * This route:
- * 1. Exchanges the authorization code for a session
- * 2. Redirects to the "next" URL (default: home page) on success
- * 3. Redirects to /login with an error parameter on failure
- */
+// Member: Tianpeng Xu
+// Auth Callback Route: Handles the OAuth/email callback from Supabase authentication.
 
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";

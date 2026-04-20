@@ -1,3 +1,6 @@
+// Member: Tianpeng Xu
+// Handling NewsAPI
+
 import type { Article } from "@/types";
 import { generateArticleId } from "./articleId";
 import { queryCache, articleCache, CACHE_TTL } from "./cache";
