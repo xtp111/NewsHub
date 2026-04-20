@@ -1,3 +1,6 @@
+// Member: Aiqi Xu
+// Layout wrapper for authentication pages
+
 "use client";
 
 import { AuthMain, AuthCard } from "@/components/primitives";

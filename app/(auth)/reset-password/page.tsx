@@ -1,3 +1,6 @@
+// Member: Aiqi Xu
+// Reset password page using server action
+
 "use client";
 
 import { useActionState } from "react";
@@ -14,7 +17,9 @@ import {
   ErrorText,
 } from "@/components/primitives";
 
+// Reset password page component
 export default function ResetPasswordPage() {
+  // Handles form state, submission, and loading state
   const [state, formAction, pending] = useActionState(resetPassword, null);
 
   return (
@@ -22,12 +27,14 @@ export default function ResetPasswordPage() {
       <AuthTitle>Set New Password</AuthTitle>
       <AuthSubtitle>Enter your new password below.</AuthSubtitle>
 
+      {/*Display error message if reset fails*/}
       {state?.error && (
         <ErrorBox>
           <ErrorText>{state.error}</ErrorText>
         </ErrorBox>
       )}
 
+      {/*New password submission form*/}
       <Form action={formAction}>
         <FormGroup>
           <Label htmlFor="password">New Password</Label>
@@ -51,6 +58,7 @@ export default function ResetPasswordPage() {
             minLength={6}
           />
         </FormGroup>
+        {/*Submit button with loading state*/}
         <PrimaryButton type="submit" disabled={pending}>
           {pending ? "Updating..." : "Update Password"}
         </PrimaryButton>

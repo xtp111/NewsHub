@@ -1,3 +1,6 @@
+// Member: Aiqi Xu
+// Login page using server actions
+
 "use client";
 
 import { useActionState } from "react";
@@ -26,12 +29,17 @@ const ForgotLink = styled(BrandLink)`
   font-weight: 400;
 `;
 
+// Login page component
 export default function LoginPage() {
+  // Read callback error from URL
   const searchParams = useSearchParams();
   const callbackError = searchParams.get("error");
+  // Login form state + action
   const [loginState, loginAction, loginPending] = useActionState(login, null);
+  // Google OAuth action state
   const [, googleAction, googlePending] = useActionState(signInWithGoogle, null);
 
+  // Combined error handling (form + callback)
   const errorMessage =
     loginState?.error ||
     (callbackError === "auth_callback_error"
@@ -49,6 +57,7 @@ export default function LoginPage() {
         </ErrorBox>
       )}
 
+      {/* Email/password login form */}
       <Form action={loginAction}>
         <FormGroup>
           <Label htmlFor="email">Email</Label>
@@ -66,6 +75,7 @@ export default function LoginPage() {
 
       <Divider>or</Divider>
 
+      {/* Google OAuth login */}
       <form action={googleAction}>
         <SecondaryButton type="submit" disabled={googlePending}>
           {googlePending ? "Redirecting..." : "Continue with Google"}

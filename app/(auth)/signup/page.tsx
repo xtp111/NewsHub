@@ -1,3 +1,6 @@
+// Member: Aiqi Xu
+// Signup page using server actions
+
 "use client";
 
 import { useActionState } from "react";
@@ -20,8 +23,11 @@ import {
   FooterText,
 } from "@/components/primitives";
 
+// Signup page component
 export default function SignupPage() {
+  // Signup form state + action handler
   const [signupState, signupAction, signupPending] = useActionState(signup, null);
+  // Google OAuth signup action
   const [, googleAction, googlePending] = useActionState(signInWithGoogle, null);
 
   return (
@@ -29,18 +35,21 @@ export default function SignupPage() {
       <AuthTitle>Create Account</AuthTitle>
       <AuthSubtitle>Sign up with your email and password.</AuthSubtitle>
 
+      {/*Display signup error message*/}
       {signupState?.error && (
         <ErrorBox>
           <ErrorText>{signupState.error}</ErrorText>
         </ErrorBox>
       )}
 
+      {/*Display signup success message*/}
       {signupState?.success && (
         <SuccessBox>
           <SuccessText>{signupState.success}</SuccessText>
         </SuccessBox>
       )}
 
+      {/*Email/password signup form*/}
       <Form action={signupAction}>
         <FormGroup>
           <Label htmlFor="email">Email</Label>
@@ -75,12 +84,14 @@ export default function SignupPage() {
 
       <Divider>or</Divider>
 
+      {/*Google OAuth signup option*/}
       <form action={googleAction}>
         <SecondaryButton type="submit" disabled={googlePending}>
           {googlePending ? "Redirecting..." : "Continue with Google"}
         </SecondaryButton>
       </form>
 
+      {/*Navigation to login page*/}
       <FooterText>
         Already have an account? <BrandLink href="/login">Log in</BrandLink>
       </FooterText>
