@@ -11,7 +11,7 @@ const Wrapper = styled.div<{ $height?: string }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${({ theme }) => theme.colors.textSubtle};
+  color: var(--color-text-muted);
   font-size: 14px;
   overflow: hidden;
 `;

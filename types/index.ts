@@ -8,7 +8,7 @@ export interface Article {
   id: string;           // Base64url-encoded article URL, used as a deterministic unique ID
   title: string;
   summary: string;      // Short description of the article
-  content?: string;     // Full article content (may be truncated by NewsAPI)
+  content?: string;     // Full article content (can be truncated by NewsAPI)
   category: string;     // UI display category (e.g., "Tech", "World", "Finance")
   author: string;
   publishedAt: string;  // ISO 8601 date string

@@ -65,7 +65,6 @@ The project uses the App Router and follows Next.js 16 conventions. The root-lev
 |   `-- Like.ts
 |-- public/
 |-- styles/
-|   `-- GlobalStyles.ts
 |-- types/
 |   `-- index.ts
 |-- next.config.ts
@@ -126,7 +125,6 @@ The project uses the App Router and follows Next.js 16 conventions. The root-lev
 
 - **registry.tsx**
   - styled-components SSR
-  - GlobalStyles
   - BookmarkProvider
 
 ## Implemented Features
