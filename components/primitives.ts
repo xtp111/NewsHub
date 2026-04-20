@@ -10,22 +10,27 @@ export const PageContainer = styled.div`
 `;
 
 export const PageTitle = styled.h1`
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-weight: 600;
     color: var(--color-text);
-    margin-bottom: 2%;
+    margin: 1% 1% 2%;
 `;
 
+// NewsGrid: grid for NewsCard
 export const NewsGrid = styled.div`
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 2%;
+    gap: 2rem;
 `;
 
-export const Main = styled.main`
+////////////////////////////////////////////////////
+// Start of: Auth pages components
+
+export const AuthMain = styled.main`
     max-width: 42rem;
     margin: 0 auto;
     padding: 2rem;
+    height: 100%;
 `;
 
 export const AuthCard = styled.div`
@@ -44,7 +49,7 @@ export const AuthTitle = styled.h1`
 `;
 
 export const AuthSubtitle = styled.p`
-    color: var(--color-text-muted);
+    color: var(--color-text-subtle);
     margin-bottom: 1.5rem;
 `;
 
@@ -143,6 +148,7 @@ export const SuccessText = styled.p`
     margin: 0;
 `;
 
+/* Horizontal Divider Line (for login page) */
 export const Divider = styled.div`
     display: flex;
     align-items: center;
@@ -159,6 +165,16 @@ export const Divider = styled.div`
     }
 `;
 
+export const FooterText = styled.p`
+    font-size: 0.85rem;
+    color: var(--color-text-subtle);
+    text-align: center;
+    margin-top: 1.5rem;
+`;
+
+// End of: Auth pages components
+////////////////////////////////////////////////////
+
 export const BrandLink = styled(Link)`
     color: var(--color-primary);
     font-weight: 500;
@@ -166,11 +182,4 @@ export const BrandLink = styled(Link)`
     &:hover {
         color: var(--color-primary-dark);
     }
-`;
-
-export const FooterText = styled.p`
-    font-size: 0.85rem;
-    color: var(--color-text-subtle);
-    text-align: center;
-    margin-top: 1.5rem;
 `;

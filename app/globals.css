@@ -1,5 +1,5 @@
 /* Member: Aiqi Xu */
-/* Global Styles */
+/* Global Styles and Variables */
 
 * {
   margin: 0;
@@ -20,10 +20,8 @@
   /* Text */
   --color-text: #1a1a1a;
   --color-text-secondary: #333333;
-  --color-text-muted: #555555;
   --color-text-subtle: #666666;
-  --color-text-placeholder: #999999;
-  --color-text-disabled: #aaaaaa;
+  --color-text-disabled: #999999;
   --color-text-inverse: #ffffff;
 
   /* Semantic */

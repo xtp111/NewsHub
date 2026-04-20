@@ -1,3 +1,6 @@
+// Member: Yuchen Bao
+// Navbar: responsive for laptop (whole menu) & mobile view (drop-down menu)
+
 "use client";
 
 import Link from "next/link";
@@ -6,7 +9,8 @@ import { logout } from "@/server/actions/auth";
 import type { User } from "@supabase/supabase-js";
 import { useState } from "react";
 
-/* --- Styled Components --- */
+
+// Styled components for laptop view
 
 const Nav = styled.nav`
   position: fixed;
@@ -19,11 +23,11 @@ const Nav = styled.nav`
 `;
 
 const NavBar = styled.div`
-  height: 64px;
+  height: 3.5rem;
   display: flex;
   align-items: center;
-  padding: 0 24px;
-  max-width: 1200px;
+  padding: 0 2rem;
+  max-width: 95vw;
   width: 100%;
   margin: 0 auto;
   justify-content: space-between;
@@ -31,7 +35,7 @@ const NavBar = styled.div`
 `;
 
 const Logo = styled(Link)`
-    font-size: 20px;
+    font-size: 1.5rem;
     font-weight: 700;
     color: var(--color-text);
     text-decoration: none;
@@ -44,65 +48,66 @@ const Logo = styled(Link)`
 
 const NavLinks = styled.div`
   display: flex;
-  gap: 32px;
+  padding: 0 2rem;
+  gap: 2rem;
 
-  @media (max-width: 640px) {
+  @media screen and (max-width: 750px) {
     display: none;
   }
 `;
 
 const NavLink = styled(Link)`
-  font-size: 15px;
-  color: var(--color-text-muted);
-  text-decoration: none;
-  font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--color-text-subtle);
+    text-decoration: none;
+    font-weight: 500;
 
-  &:hover {
-    color: var(--color-primary);
-  }
+    &:hover {
+        color: var(--color-primary);
+    }
 `;
 
 const RightSection = styled.div`
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 1rem;
   flex-shrink: 0;
 
-  @media (max-width: 640px) {
+  @media screen and (max-width: 750px) {
     display: none;
   }
 `;
 
 const UserEmail = styled.span`
-  font-size: 13px;
+  font-size: 0.9rem;
   color: var(--color-text-subtle);
-  max-width: 160px;
+  max-width: clamp(2rem, 10rem, 10vw);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 `;
 
 const LogoutButton = styled.button`
-  background: none;
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
-  padding: 4px 12px;
-  font-size: 13px;
-  color: var(--color-text-muted);
-  cursor: pointer;
-  white-space: nowrap;
+    background: none;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.85rem;
+    color: var(--color-text-subtle);
+    cursor: pointer;
+    white-space: nowrap;
 
-  &:hover {
-    border-color: var(--color-primary);
-    color: var(--color-primary);
-  }
+    &:hover {
+        border-color: var(--color-primary);
+        color: var(--color-primary);
+    }
 `;
 
 const LoginLink = styled(Link)`
   color: var(--color-primary);
   font-weight: 500;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 0.9rem;
   white-space: nowrap;
 
   &:hover {
@@ -110,60 +115,63 @@ const LoginLink = styled(Link)`
   }
 `;
 
-const HamburgerButton = styled.button`
-  display: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
-  color: var(--color-text-muted);
 
-  @media (max-width: 640px) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+// Styled components for mobile view
+
+const HamburgerButton = styled.button`
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    color: var(--color-text-subtle);
+
+    @media screen and (max-width: 750px) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 `;
 
 const MobileMenu = styled.div<{ $open: boolean }>`
   display: ${({ $open }) => ($open ? "flex" : "none")};
   flex-direction: column;
-  padding: 12px 24px 16px;
+  padding: 0.5rem 2rem 1.5rem;
   border-top: 1px solid var(--color-border-subtle);
-  gap: 4px;
+  gap: 5%;
 
-  @media (min-width: 641px) {
+  @media screen and (min-width: 750px) {
     display: none;
   }
 `;
 
 const MobileNavLink = styled(Link)`
-  font-size: 15px;
-  color: var(--color-text-muted);
-  text-decoration: none;
-  font-weight: 500;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--color-bg-subtle);
+    font-size: 0.9rem;
+    color: var(--color-text-subtle);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--color-bg-subtle);
 
-  &:last-of-type {
-    border-bottom: none;
-  }
+    &:last-of-type {
+        border-bottom: none;
+    }
 
-  &:hover {
-    color: var(--color-primary);
-  }
+    &:hover {
+        color: var(--color-primary);
+    }
 `;
 
 const MobileAuthRow = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 8px;
-  gap: 12px;
+  padding-top: 0.5rem;
+  gap: 0.8rem;
 `;
 
 const MobileUserEmail = styled.span`
-  font-size: 13px;
+  font-size: 0.9rem;
   color: var(--color-text-subtle);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -172,7 +180,7 @@ const MobileUserEmail = styled.span`
   min-width: 0;
 `;
 
-/* --- Hamburger SVG Icon --- */
+// Hamburger SVG Icon for mobile menu drop-down button
 function HamburgerIcon({ open }: { open: boolean }) {
   return open ? (
     <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -188,9 +196,9 @@ function HamburgerIcon({ open }: { open: boolean }) {
   );
 }
 
-/* --- Component --- */
-
 export default function Navbar({ user }: { user: User | null }) {
+
+  // State of mobile drop-down menu
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (

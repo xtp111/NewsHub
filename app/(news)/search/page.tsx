@@ -14,8 +14,8 @@ import { useFetch } from "@/hooks/useFetch";
 
 // Styled components
 const SearchInfo = styled.div`
-    color: var(--color-text-muted);
-    margin-bottom: 2%;
+    margin: 0.5rem 0.25rem 1.5rem;
+    color: var(--color-text-subtle);
     font-size: 0.85rem;
 `;
 

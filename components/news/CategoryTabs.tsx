@@ -1,32 +1,26 @@
-/**
- * CategoryTabs Component
- *
- * Horizontal row of pill-shaped category filter buttons.
- * Allows users to filter news articles by category on the home page.
- * Categories: All, Tech, World, Culture, Finance, Sports.
- * The active category is highlighted with a filled blue style.
- */
+// Member: Yuchen Bao
+// CategoryTabs: tabs showing news categories on home page, under the search box.
 
 import styled from "styled-components";
 
-/* --- Styled Components --- */
+// Styled Components
 
 // Horizontal flex container for category tabs with wrapping support
 const TabsContainer = styled.div`
   display: flex;
-  gap: 12px;
-  margin-bottom: 24px;
+  gap: 0.5rem;
+  margin: 1rem;
   flex-wrap: wrap;
 `;
 
 // Individual category tab button with active/inactive states
 const Tab = styled.button<{ $active: boolean }>`
-  padding: 8px 16px;
+  padding: 0.5rem 1rem;
   border-radius: 20px;
   border: 1px solid ${(props) => (props.$active ? "var(--color-primary)" : "var(--color-border)")};
   background: ${(props) => (props.$active ? "var(--color-primary)" : "var(--color-bg)")};
-  color: ${(props) => (props.$active ? "var(--color-text-inverse)" : "var(--color-text-muted)")};
-  font-size: 14px;
+  color: ${(props) => (props.$active ? "var(--color-text-inverse)" : "var(--color-text-subtle)")};
+  font-size: 0.85rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;

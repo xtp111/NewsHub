@@ -15,6 +15,9 @@ import { useFetch } from "@/hooks/useFetch";
 
 // Styled header
 const Header = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;  
   margin-bottom: 2%;
 `;
 
@@ -29,16 +32,15 @@ export default function Home() {
   // Fallback to empty array if data is not yet available
   const news = data?.articles ?? [];
 
-  // Render the UI
   return (
     <PageContainer>
       {/* Page header section with title and search */}
       <Header>
         <PageTitle>Today&apos;s News</PageTitle>
         <SearchBar />
+        {/* Category filter tabs */}
+        <CategoryTabs activeCategory={category} onCategoryChange={setCategory} />
       </Header>
-      {/* Category filter tabs */}
-      <CategoryTabs activeCategory={category} onCategoryChange={setCategory} />
       {/* Handle loading and error states while fetching data */}
       <AsyncBoundary loading={loading} error={error}>
         {/* Display list of news articles */}

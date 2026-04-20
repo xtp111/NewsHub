@@ -47,7 +47,7 @@ export default function ForgotPasswordPage() {
         </PrimaryButton>
       </Form>
 
-      <BrandLink href="/login" style={{ fontSize: "0.875rem", display: "inline-block", marginTop: "1.5rem" }}>
+      <BrandLink href="/login" style={{ fontSize: "0.85rem", display: "inline-block", marginTop: "1.5rem" }}>
         &larr; Back to log in
       </BrandLink>
     </>

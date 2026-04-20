@@ -21,7 +21,7 @@ import {
 } from "@/components/primitives";
 
 const ForgotLink = styled(BrandLink)`
-  font-size: 0.875rem;
+  font-size: 0.85rem;
   text-align: right;
   font-weight: 400;
 `;

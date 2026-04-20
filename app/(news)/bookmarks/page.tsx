@@ -10,7 +10,7 @@ import styled from "styled-components";
 
 // Styled component for displaying the number of bookmarks next to the title
 const Count = styled.span`
-    color: var(--color-text-muted);
+    color: var(--color-text-subtle);
     font-size: 1rem;
     font-weight: 400;
 `;

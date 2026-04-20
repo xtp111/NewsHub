@@ -5,15 +5,15 @@ import styled from "styled-components";
 import { useImageFallback } from "@/hooks/useImageFallback";
 
 const Wrapper = styled.div<{ $height?: string }>`
-  width: 100%;
-  height: ${({ $height }) => $height ?? "180px"};
-  background: var(--color-bg-subtle);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-text-muted);
-  font-size: 14px;
-  overflow: hidden;
+    width: 100%;
+    height: ${({$height}) => $height ?? "180px"};
+    background: var(--color-bg-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-subtle);
+    font-size: 14px;
+    overflow: hidden;
 `;
 
 const Img = styled.img`

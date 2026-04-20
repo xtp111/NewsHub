@@ -31,8 +31,8 @@ export default async function RootLayout({
         <StyledRegistry>
           <ClientProviders>
             <Navbar user={user} />
-            {/* Padding Top: for navbar */}
-            <main style={{ paddingTop: "64px" }}>{children}</main>
+            {/* Padding Top: same height as navbar */}
+            <main style={{ paddingTop: "3.5rem" }}>{children}</main>
           </ClientProviders>
         </StyledRegistry>
       </body>

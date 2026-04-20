@@ -58,7 +58,7 @@ const ImageWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-text-placeholder);
+  color: var(--color-text-disabled);
   margin-bottom: 32px;
   overflow: hidden;
 `;
@@ -110,7 +110,7 @@ const ActionButton = styled.button<{ $active?: boolean }>`
   border: 1px solid var(--color-border);
   border-radius: 6px;
   background: ${(props) => (props.$active ? "var(--color-primary)" : "var(--color-bg)")};
-  color: ${(props) => (props.$active ? "var(--color-text-inverse)" : "var(--color-text-muted)")};
+  color: ${(props) => (props.$active ? "var(--color-text-inverse)" : "var(--color-text-subtle)")};
   font-size: 14px;
   cursor: pointer;
 
