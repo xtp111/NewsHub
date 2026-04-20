@@ -13,7 +13,7 @@ import styled from "styled-components";
 import type { Article } from "@/types";
 import { useFetch } from "@/hooks/useFetch";
 
-// styled header
+// Styled header
 const Header = styled.div`
   margin-bottom: 2%;
 `;

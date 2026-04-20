@@ -12,7 +12,7 @@ import styled from "styled-components";
 import type { Article } from "@/types";
 import { useFetch } from "@/hooks/useFetch";
 
-// styled components
+// Styled components
 const SearchInfo = styled.div`
     color: var(--color-text-muted);
     margin-bottom: 2%;

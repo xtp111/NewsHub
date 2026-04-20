@@ -1,14 +1,5 @@
-/**
- * Root Layout
- * Member:
- * The top-level layout component for the entire Next.js application.
- * Responsibilities:
- * - Sets HTML metadata (title, description)
- * - Fetches the current Supabase user on the server side
- * - Renders the Navbar with the user prop for auth status display
- * - Wraps all page content with StyledComponentsRegistry (SSR styles + BookmarkProvider)
- * - Adds 64px top padding to main content to account for the fixed navbar
- */
+// Member: Aiqi Xu
+// RootLayout
 
 import type { Metadata } from "next";
 import "./globals.css";
@@ -19,7 +10,7 @@ import React from "react";
 
 // Application-wide metadata for SEO
 export const metadata: Metadata = {
-  title: "NewsHub | CS601 GW",
+  title: "NewsHub | CS601GW",
   description: "Get the latest news updates",
 };
 
@@ -40,6 +31,7 @@ export default async function RootLayout({
         <StyledRegistry>
           <ClientProviders>
             <Navbar user={user} />
+            {/* Padding Top: for navbar */}
             <main style={{ paddingTop: "64px" }}>{children}</main>
           </ClientProviders>
         </StyledRegistry>

@@ -1,3 +1,6 @@
+/* Member: Aiqi Xu */
+/* Global Styles */
+
 * {
   margin: 0;
   box-sizing: border-box;
@@ -32,15 +35,13 @@
   --color-info: #41a564;
   --color-info-bg: #eff6ff;
   --color-info-border: #8ec582;
-
-  /* Fluid font size: 14px at small viewports, scales up to ~18px */
-  --font-size-base: calc(14px + 0.25vh);
 }
 
-body {
-  /*font-family:*/
-  font-size: var(--font-size-base);
+html, body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: calc(14px + 0.25vh);  /* rem */
   color: var(--color-text);
-  background-color: var(--color-bg);
+  line-height: 1.6;
+  background-color: var(--color-bg-subtle);
   min-height: 120vh;
 }

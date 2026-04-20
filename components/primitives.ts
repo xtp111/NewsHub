@@ -1,4 +1,4 @@
-// Member:
+// Member: Yuchen Bao
 // Primitive styled components
 
 import styled from 'styled-components';
@@ -10,16 +10,16 @@ export const PageContainer = styled.div`
 `;
 
 export const PageTitle = styled.h1`
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--color-text);
-  margin-bottom: 24px;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 2%;
 `;
 
 export const NewsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 24px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2%;
 `;
 
 export const Main = styled.main`
