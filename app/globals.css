@@ -24,8 +24,9 @@
   --color-text-inverse: #ffffff;
 
   /* Semantic */
-  --color-danger: #e74c3c;
-  --color-danger-alt: #dc2626;
+  --color-danger: #dc2626;
+  --color-danger-bg: #fef2f2;
+  --color-danger-border: #fecaca;
 
   /* Info */
   --color-info: #41a564;

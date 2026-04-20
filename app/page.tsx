@@ -1,6 +1,10 @@
+// Member: Aiqi Xu
+// Home Page of the App
+
 "use client";
 
 import { useState } from "react";
+import { PageContainer, PageTitle, NewsGrid } from "@/components/primitives";
 import NewsCard from "@/components/news/NewsCard";
 import CategoryTabs from "@/components/news/CategoryTabs";
 import SearchBar from "@/components/layout/SearchBar";
@@ -9,51 +13,42 @@ import styled from "styled-components";
 import type { Article } from "@/types";
 import { useFetch } from "@/hooks/useFetch";
 
-const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 24px;
-`;
-
+// styled header
 const Header = styled.div`
-  margin-bottom: 32px;
-`;
-
-const Title = styled.h1`
-  font-size: 28px;
-  font-weight: 600;
-  color: ${({ theme }) => theme.colors.text};
-  margin-bottom: 16px;
-`;
-
-const NewsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 24px;
-  margin-top: 24px;
+  margin-bottom: 2%;
 `;
 
 export default function Home() {
+  // State to track the selected news category (default is "all")
   const [category, setCategory] = useState("all");
+  // Fetch news data based on the selected category
+  // The API endpoint updates whenever `category` changes
   const { data, loading, error } = useFetch<{ articles: Article[] }>(
     `/api/news?category=${category}`
   );
+  // Fallback to empty array if data is not yet available
   const news = data?.articles ?? [];
 
+  // Render the UI
   return (
-    <Container>
+    <PageContainer>
+      {/* Page header section with title and search */}
       <Header>
-        <Title>Today&apos;s News</Title>
+        <PageTitle>Today&apos;s News</PageTitle>
         <SearchBar />
       </Header>
+      {/* Category filter tabs */}
       <CategoryTabs activeCategory={category} onCategoryChange={setCategory} />
+      {/* Handle loading and error states while fetching data */}
       <AsyncBoundary loading={loading} error={error}>
+        {/* Display list of news articles */}
         <NewsGrid>
           {news.map((article) => (
+            // Render individual news article card
             <NewsCard key={article.id} article={article} />
           ))}
         </NewsGrid>
       </AsyncBoundary>
-    </Container>
+    </PageContainer>
   );
 }

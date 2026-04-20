@@ -15,7 +15,7 @@ import {
   SuccessBox,
   SuccessText,
   BrandLink,
-} from "@/styles/primitives";
+} from "@/components/primitives";
 
 export default function ForgotPasswordPage() {
   const [state, formAction, pending] = useActionState(forgotPassword, null);

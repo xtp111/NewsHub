@@ -1,37 +1,30 @@
+// Member: Aiqi Xu
+// Bookmarks Page: display user-tailored bookmarked news
+
 "use client";
 
 import { useBookmarks } from "@/context/BookmarkContext";
+import { PageContainer, PageTitle } from "@/components/primitives";
 import BookmarkList from "@/components/layout/BookmarkList";
 import styled from "styled-components";
 
-const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 24px;
-`;
-
-const Title = styled.h1`
-  font-size: 24px;
-  font-weight: 600;
-  color: ${({ theme }) => theme.colors.text};
-  margin-bottom: 24px;
-`;
-
+// Styled component for displaying the number of bookmarks next to the title
 const Count = styled.span`
-  color: ${({ theme }) => theme.colors.textMuted};
-  font-size: 16px;
-  font-weight: 400;
+    color: var(--color-text-muted);
+    font-size: 1rem;
+    font-weight: 400;
 `;
 
 export default function BookmarksPage() {
-  const { bookmarks } = useBookmarks();
+    // Get bookmarked articles from global context
+    const { bookmarks } = useBookmarks();
 
-  return (
-    <Container>
-      <Title>
-        My Bookmarks <Count>({bookmarks.length})</Count>
-      </Title>
-      <BookmarkList bookmarks={bookmarks} />
-    </Container>
-  );
+    return (
+    <PageContainer>
+        <PageTitle>
+            My Bookmarks <Count>({bookmarks.length})</Count> {/* Display total number of bookmarks */}
+        </PageTitle>
+        <BookmarkList bookmarks={bookmarks} />
+    </PageContainer>
+    );
 }

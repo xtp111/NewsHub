@@ -18,7 +18,7 @@ import {
   Divider,
   BrandLink,
   FooterText,
-} from "@/styles/primitives";
+} from "@/components/primitives";
 
 export default function SignupPage() {
   const [signupState, signupAction, signupPending] = useActionState(signup, null);

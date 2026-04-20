@@ -1,6 +1,6 @@
 "use client";
 
-import { Main, AuthCard } from "@/styles/primitives";
+import { Main, AuthCard } from "@/components/primitives";
 import React from 'react';
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {

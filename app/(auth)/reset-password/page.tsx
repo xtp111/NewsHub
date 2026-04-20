@@ -12,7 +12,7 @@ import {
   PrimaryButton,
   ErrorBox,
   ErrorText,
-} from "@/styles/primitives";
+} from "@/components/primitives";
 
 export default function ResetPasswordPage() {
   const [state, formAction, pending] = useActionState(resetPassword, null);

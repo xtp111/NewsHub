@@ -18,7 +18,7 @@ import {
   Divider,
   BrandLink,
   FooterText,
-} from "@/styles/primitives";
+} from "@/components/primitives";
 
 const ForgotLink = styled(BrandLink)`
   font-size: 0.875rem;
